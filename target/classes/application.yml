@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@orcl.cjlbz1oo4tuv.us-east-2.rds.amazonaws.com:1521:ORCL
+    username: HydraBatch
+    password: p4ssw0rd
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  aop:
+    auto: true
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+      hibernate: INFO
