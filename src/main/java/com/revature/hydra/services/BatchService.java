@@ -2,8 +2,6 @@ package com.revature.hydra.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.revature.hydra.entities.Batch;
 
 /**

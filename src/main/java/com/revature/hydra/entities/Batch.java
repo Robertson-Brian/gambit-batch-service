@@ -1,6 +1,7 @@
 package com.revature.hydra.entities;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -57,7 +58,7 @@ public class Batch {
 	private Set<Integer> skills;
 
 	@Transient
-	private Set<Integer> trainees;
+	private List<Integer> trainees;
 
 	@Transient
 	private Set<Integer> notes;
@@ -74,7 +75,7 @@ public class Batch {
 
 	public Batch(int resourceId, String trainingName, Trainer trainer, Trainer cotrainer, String skillType,
 			String trainingType, Timestamp startDate, Timestamp endDate, String location, String curriculum,
-			Set<Integer> skills, Set<Integer> trainees, Set<Integer> notes, int batchId) {
+			Set<Integer> skills, List<Integer> trainees, Set<Integer> notes, int batchId) {
 		super();
 		this.resourceId = resourceId;
 		this.trainingName = trainingName;
@@ -277,11 +278,11 @@ public class Batch {
 		this.skills = skills;
 	}
 
-	public Set<Integer> getTrainees() {
+	public List<Integer> getTrainees() {
 		return trainees;
 	}
 
-	public void setTrainees(Set<Integer> trainees) {
+	public void setTrainees(List<Integer> trainees) {
 		this.trainees = trainees;
 	}
 

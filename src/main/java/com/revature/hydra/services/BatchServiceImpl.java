@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.hydra.entities.Batch;
 import com.revature.hydra.repository.BatchRepo;
@@ -23,6 +22,9 @@ public class BatchServiceImpl implements BatchService {
 	 ************************************************************************************/
 	@Autowired
 	private BatchRepo batchRepo;
+	
+//	@Autowired
+//	private UserClient userClient;
 
 	/************************************************************************************
 	 * Constructors
@@ -39,65 +41,6 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	public BatchServiceImpl(BatchRepo batchRepo) {
 		super();
-		this.batchRepo = batchRepo;
-	}
-
-	/************************************************************************************
-	 * hashCode() and equals()
-	 ************************************************************************************/
-	/**
-	 * Generate BatchServiceImpl hash code
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((batchRepo == null) ? 0 : batchRepo.hashCode());
-		return result;
-	}
-
-	/**
-	 * Check if BatchServiceImpl is equivalent to another Object
-	 *
-	 * @param Object
-	 *            obj
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BatchServiceImpl other = (BatchServiceImpl) obj;
-		if (batchRepo == null) {
-			if (other.batchRepo != null)
-				return false;
-		} else if (!batchRepo.equals(other.batchRepo))
-			return false;
-		return true;
-	}
-
-	/************************************************************************************
-	 * Getters and Setters
-	 ************************************************************************************/
-	/**
-	 * Retrieve BatchService.batchRepo
-	 * 
-	 * @return BatchRepo batchRepo
-	 */
-	public BatchRepo getBatchRepo() {
-		return batchRepo;
-	}
-
-	/**
-	 * Set BatchService.batchRepo to a given BatchRepo
-	 * 
-	 * @param BatchRepo
-	 *            batchRepo
-	 */
-	public void setBatchRepo(BatchRepo batchRepo) {
 		this.batchRepo = batchRepo;
 	}
 
@@ -130,6 +73,8 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch findById(int id) {
+//		Batch batch = batchRepo.findByBatchId(id);
+//		batch.setTrainees(userClient.findAllByBatchAndStatus(id, "placeholder").getBody()));
 		return batchRepo.findByBatchId(id);
 	}
 	

@@ -94,7 +94,7 @@ public class BatchController {
 	 * 
 	 * @return List<Batch>
 	 */
-	@GetMapping("trainer/{id}")
+	@GetMapping("trainers/{id}")
 	public List<Batch> findByTrainerId(@PathVariable int id) {
 		return batchService.findByTrainerId(id);
 	}

@@ -1,3 +1,6 @@
+server:
+  port: 8909
+ 
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -15,7 +18,14 @@ spring:
       ddl-auto: none
   aop:
     auto: true
+  application:
+    name: batch-service
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.20:8761/eureka
+      
 logging:
   level:
     root: INFO
