@@ -51,7 +51,7 @@ public class UserReceiver {
 		String queueName = channel.queueDeclare().getQueue();
 		channel.queueBind(queueName, TRAINER_EXCHANGE_NAME, "");
 
-		System.out.println(" [*] Waiting for messages.");
+		System.out.println(" [*] Waiting for Trainer messages.");
 
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
@@ -83,7 +83,7 @@ public class UserReceiver {
 		String queueName = channel.queueDeclare().getQueue();
 		channel.queueBind(queueName, TRAINEE_EXCHANGE_NAME, "");
 
-		System.out.println(" [*] Waiting for messages.");
+		System.out.println(" [*] Waiting for Trainee messages.");
 
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
