@@ -15,7 +15,6 @@ import com.rabbitmq.client.Envelope;
 
 @Component
 public class BatchReceiver {
-
     private static final String QUEUE_NAME = "products_queue";
 
     BatchReceiver() throws IOException, TimeoutException {

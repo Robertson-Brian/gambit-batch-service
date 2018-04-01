@@ -1,0 +1,99 @@
+package com.revature.hydra.messaging;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.concurrent.TimeoutException;
+
+import org.springframework.stereotype.Service;
+
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
+
+@Service
+public class UserReceiver {
+
+	public UserReceiver() {
+		super();
+		try {
+			this.receiveTrainer();
+			this.receiveTrainee();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static final String TRAINEE_EXCHANGE_NAME = "hydra.trainee.exchange";
+	private static final String TRAINER_EXCHANGE_NAME = "hydra.trainer.exchange";
+
+	/**
+	 * Receives messages from the Trainer exchange
+	 */
+	public void receiveTrainer() throws IOException, TimeoutException {
+		ConnectionFactory factory = new ConnectionFactory();
+
+		// This user was created on host machine through the rabbitmq management console
+		// (localhost:15672 as of 3/28/2018)
+		factory.setUsername("test");
+		factory.setPassword("test");
+		// Currently this is the hard coded address of the host.
+		factory.setHost(InetAddress.getLocalHost().getHostAddress());
+		Connection connection = factory.newConnection();
+		Channel channel = connection.createChannel();
+
+		channel.exchangeDeclare(TRAINER_EXCHANGE_NAME, "fanout");
+		String queueName = channel.queueDeclare().getQueue();
+		channel.queueBind(queueName, TRAINER_EXCHANGE_NAME, "");
+
+		System.out.println(" [*] Waiting for Trainer messages.");
+
+		Consumer consumer = new DefaultConsumer(channel) {
+			@Override
+			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+					byte[] body) throws IOException {
+				String message = new String(body, "UTF-8");
+				System.out.println(" [x] Trainer Received '" + message + "'");
+			}
+		};
+		channel.basicConsume(queueName, true, consumer);
+	}
+
+	/**
+	 * Receives messages from the Trainee exchange
+	 */
+	public void receiveTrainee() throws IOException, TimeoutException {
+		ConnectionFactory factory = new ConnectionFactory();
+
+		// This user was created on host machine through the rabbitmq management console
+		// (localhost:15672 as of 3/28/2018)
+		factory.setUsername("test");
+		factory.setPassword("test");
+		// Currently this is the hard coded address of the host.
+		factory.setHost(InetAddress.getLocalHost().getHostAddress());
+		Connection connection = factory.newConnection();
+		Channel channel = connection.createChannel();
+
+		channel.exchangeDeclare(TRAINEE_EXCHANGE_NAME, "fanout");
+		String queueName = channel.queueDeclare().getQueue();
+		channel.queueBind(queueName, TRAINEE_EXCHANGE_NAME, "");
+
+		System.out.println(" [*] Waiting for Trainee messages.");
+
+		Consumer consumer = new DefaultConsumer(channel) {
+			@Override
+			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+					byte[] body) throws IOException {
+				String message = new String(body, "UTF-8");
+				System.out.println(" [x] Trainee Received '" + message + "'");
+			}
+		};
+		channel.basicConsume(queueName, true, consumer);
+	}
+
+}
