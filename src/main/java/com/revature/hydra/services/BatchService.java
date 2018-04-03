@@ -3,6 +3,7 @@ package com.revature.hydra.services;
 import java.util.List;
 
 import com.revature.hydra.entities.Batch;
+import com.revature.hydra.entities.Trainee;
 
 /**
  * Hydra service for Janus Batches
@@ -16,6 +17,8 @@ public interface BatchService {
 	 * Create
 	 ************************************************************************************/
 	public Batch save(Batch newBatch);
+	
+	public void newBatchTrainee(Trainee trainee);
 
 	/************************************************************************************
 	 * Read

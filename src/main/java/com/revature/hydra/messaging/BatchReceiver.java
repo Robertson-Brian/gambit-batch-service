@@ -5,7 +5,8 @@ import java.net.InetAddress;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.AMQP;
@@ -16,12 +17,10 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import com.revature.hydra.entities.TraineeDTO;
+import com.revature.hydra.services.BatchService;
 
-@Component
+@Service
 public class BatchReceiver {
-    private static final String TRAINEE_EXCHANGE = "hydra.trainee.exchange";
-	private static final Logger log = Logger.getLogger(BatchReceiver.class);
-	private ObjectMapper om = new ObjectMapper();
 	
 	public BatchReceiver() {
 		super();
@@ -33,6 +32,15 @@ public class BatchReceiver {
 			e.printStackTrace();
 		}
 	}
+	
+    private static final String TRAINEE_EXCHANGE = "hydra.trainee.exchange";
+	private static final Logger log = Logger.getLogger(BatchReceiver.class);
+	private ObjectMapper om = new ObjectMapper();
+	
+
+	@Autowired
+	private BatchService batchService;
+	
 
     public void receiveTrainee() throws IOException, TimeoutException {
 		ConnectionFactory factory = new ConnectionFactory();
@@ -61,9 +69,9 @@ public class BatchReceiver {
 				String message = new String(body, "UTF-8");
 				log.info(" [x] Trainee Received '" + message + "'");
 				TraineeDTO trainee = om.readValue(message, TraineeDTO.class);
-				
+				log.info("[x] Trainee after parse: " + trainee.toString());
 				// Checks if the sender receives their own message, which is intended behavior.
-				// It is not required for function, but does show that it is working
+				// Prevents service from updating when it receives its own updates
 				if (trainee.getSender().equals(InetAddress.getLocalHost().getHostAddress())) {
 					log.info("Received own message, as intended.");
 				} else {
@@ -71,12 +79,12 @@ public class BatchReceiver {
 					 * Additional functions would be added here based on what you want to do with the received information
 					*/
 					if (trainee.getRequestType().equals("PUT")) {
-						//traineeService.update(trainee.getTrainee());
+						//batchService.update(trainee.getTrainee());
 						log.info("PUT method received");
 					}
 					if (trainee.getRequestType().equals("POST")) {
 						// gets the trainee object from the wrapper object
-						//traineeService.save(trainee.getTrainee());
+						batchService.newBatchTrainee(trainee.getTrainee());
 						log.info("POST method received");
 					}
 				}

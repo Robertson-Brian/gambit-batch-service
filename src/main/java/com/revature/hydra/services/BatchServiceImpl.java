@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.hydra.entities.Batch;
+import com.revature.hydra.entities.BatchTrainee;
+import com.revature.hydra.entities.Trainee;
 import com.revature.hydra.repository.BatchRepo;
+import com.revature.hydra.repository.BatchTraineeRepo;
 
 /**
  * Hydra service implementation for Janus Batches
@@ -22,6 +25,9 @@ public class BatchServiceImpl implements BatchService {
 	 ************************************************************************************/
 	@Autowired
 	private BatchRepo batchRepo;
+	
+	@Autowired
+	private BatchTraineeRepo batchTraineeRepo;
 	
 //	@Autowired
 //	private UserClient userClient;
@@ -60,8 +66,15 @@ public class BatchServiceImpl implements BatchService {
 		return batchRepo.save(newBatch);
 	}
 	
+	@Override
+	public void newBatchTrainee(Trainee trainee) {
+		List<BatchTrainee> junctions = trainee.getBatches();
+		System.out.println("First junction object: " + junctions.get(0).toString());
+		batchTraineeRepo.save(junctions);
+	}
+	
 	/************************************************************************************
-	 * Read
+	 * Read 
 	 ************************************************************************************/
 	/**
 	 * Call BatchRepo's findById() method and return a Batch in the HydraBatch database
@@ -125,7 +138,9 @@ public class BatchServiceImpl implements BatchService {
 	 * 
 	 * @param int id
 	 */
+	@Override
 	public void delete(int id) {
 		batchRepo.deleteByBatchId(id);
 	}
+
 }
