@@ -1,6 +1,7 @@
 package com.revature.hydra.messaging;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.stereotype.Component;
@@ -19,7 +20,8 @@ public class BatchReceiver {
 
     BatchReceiver() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("192.168.0.23");
+        //factory.setHost("10.226.124.149");
+		factory.setHost(InetAddress.getLocalHost().getHostAddress());
         factory.setUsername("test");
         factory.setPassword("test");
         Connection connection = factory.newConnection();

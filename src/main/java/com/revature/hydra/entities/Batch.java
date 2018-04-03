@@ -9,11 +9,15 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Batch {
@@ -57,8 +61,8 @@ public class Batch {
 	@Transient
 	private Set<Integer> skills;
 
-	@Transient
-	private List<Integer> trainees;
+//	@Transient
+//	private List<Integer> trainees;
 
 	@Transient
 	private Set<Integer> notes;
@@ -68,6 +72,10 @@ public class Batch {
 	@SequenceGenerator(name = "batch_id_seq", sequenceName = "batch_id_seq", allocationSize = 1)
 	@GeneratedValue(generator = "batch_id_seq", strategy = GenerationType.AUTO)
 	private int batchId;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "batchId", fetch = FetchType.EAGER)
+	private List<BatchTrainee> trainees;
 
 	public Batch() {
 		super();
@@ -75,7 +83,7 @@ public class Batch {
 
 	public Batch(int resourceId, String trainingName, Trainer trainer, Trainer cotrainer, String skillType,
 			String trainingType, Timestamp startDate, Timestamp endDate, String location, String curriculum,
-			Set<Integer> skills, List<Integer> trainees, Set<Integer> notes, int batchId) {
+			Set<Integer> skills, Set<Integer> notes, int batchId, List<BatchTrainee> trainees) {
 		super();
 		this.resourceId = resourceId;
 		this.trainingName = trainingName;
@@ -88,9 +96,9 @@ public class Batch {
 		this.location = location;
 		this.curriculum = curriculum;
 		this.skills = skills;
-		this.trainees = trainees;
 		this.notes = notes;
 		this.batchId = batchId;
+		this.trainees = trainees;
 	}
 
 	@Override
@@ -190,6 +198,15 @@ public class Batch {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Batch [resourceId=" + resourceId + ", trainingName=" + trainingName + ", trainer=" + trainer
+				+ ", cotrainer=" + cotrainer + ", skillType=" + skillType + ", trainingType=" + trainingType
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", location=" + location + ", curriculum="
+				+ curriculum + ", skills=" + skills + ", notes=" + notes + ", batchId=" + batchId + ", trainees="
+				+ trainees + "]";
+	}
+
 	public int getResourceId() {
 		return resourceId;
 	}
@@ -278,14 +295,6 @@ public class Batch {
 		this.skills = skills;
 	}
 
-	public List<Integer> getTrainees() {
-		return trainees;
-	}
-
-	public void setTrainees(List<Integer> trainees) {
-		this.trainees = trainees;
-	}
-
 	public Set<Integer> getNotes() {
 		return notes;
 	}
@@ -300,6 +309,14 @@ public class Batch {
 
 	public void setBatchId(int batchId) {
 		this.batchId = batchId;
+	}
+
+	public List<BatchTrainee> getTrainees() {
+		return trainees;
+	}
+
+	public void setTrainees(List<BatchTrainee> trainees) {
+		this.trainees = trainees;
 	}
 
 }

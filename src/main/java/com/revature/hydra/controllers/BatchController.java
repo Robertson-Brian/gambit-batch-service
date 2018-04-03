@@ -24,7 +24,7 @@ import com.revature.hydra.services.BatchService;
  *
  */
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "batches")
 @CrossOrigin
 public class BatchController {
 
