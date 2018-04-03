@@ -20,7 +20,6 @@ public class BatchReceiver {
 
     BatchReceiver() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        //factory.setHost("10.226.124.149");
 		factory.setHost(InetAddress.getLocalHost().getHostAddress());
         factory.setUsername("test");
         factory.setPassword("test");
