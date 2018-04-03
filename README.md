@@ -7,3 +7,5 @@ repository
 
 This service handles all actions that any Caliber trainer may use 
 to create, access or modify batches.
+
+jenkins test
