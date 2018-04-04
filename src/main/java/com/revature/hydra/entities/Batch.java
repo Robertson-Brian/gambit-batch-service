@@ -1,23 +1,15 @@
 package com.revature.hydra.entities;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Batch {
@@ -28,17 +20,11 @@ public class Batch {
 	@Column(name = "training_name")
 	private String trainingName;
 
-	@Embedded
-	@AttributeOverrides(value = { @AttributeOverride(name = "trainerId", column = @Column(name = "trainer_id"))
-
-	})
-	private Trainer trainer;
-
-	@Embedded
-	@AttributeOverrides(value = { @AttributeOverride(name = "trainerId", column = @Column(name = "cotrainer_id"))
-
-	})
-	private Trainer cotrainer;
+	@Column(name = "trainer_id")
+	private int trainer;
+	
+	@Column(name = "cotrainer_id")
+	private int cotrainer;
 
 	@Column(name = "skill_type")
 	private String skillType;
@@ -61,9 +47,6 @@ public class Batch {
 	@Transient
 	private Set<Integer> skills;
 
-//	@Transient
-//	private List<Integer> trainees;
-
 	@Transient
 	private Set<Integer> notes;
 
@@ -72,18 +55,14 @@ public class Batch {
 	@SequenceGenerator(name = "batch_id_seq", sequenceName = "batch_id_seq", allocationSize = 1)
 	@GeneratedValue(generator = "batch_id_seq", strategy = GenerationType.AUTO)
 	private int batchId;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "batchId", fetch = FetchType.EAGER)
-	private List<BatchTrainee> trainees;
 
 	public Batch() {
 		super();
 	}
 
-	public Batch(int resourceId, String trainingName, Trainer trainer, Trainer cotrainer, String skillType,
-			String trainingType, Timestamp startDate, Timestamp endDate, String location, String curriculum,
-			Set<Integer> skills, Set<Integer> notes, int batchId, List<BatchTrainee> trainees) {
+	public Batch(int resourceId, String trainingName, int trainer, int cotrainer, String skillType, String trainingType,
+			Timestamp startDate, Timestamp endDate, String location, String curriculum, Set<Integer> skills,
+			Set<Integer> notes, int batchId) {
 		super();
 		this.resourceId = resourceId;
 		this.trainingName = trainingName;
@@ -98,7 +77,6 @@ public class Batch {
 		this.skills = skills;
 		this.notes = notes;
 		this.batchId = batchId;
-		this.trainees = trainees;
 	}
 
 	@Override
@@ -106,7 +84,7 @@ public class Batch {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + batchId;
-		result = prime * result + ((cotrainer == null) ? 0 : cotrainer.hashCode());
+		result = prime * result + cotrainer;
 		result = prime * result + ((curriculum == null) ? 0 : curriculum.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
@@ -115,8 +93,7 @@ public class Batch {
 		result = prime * result + ((skillType == null) ? 0 : skillType.hashCode());
 		result = prime * result + ((skills == null) ? 0 : skills.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((trainees == null) ? 0 : trainees.hashCode());
-		result = prime * result + ((trainer == null) ? 0 : trainer.hashCode());
+		result = prime * result + trainer;
 		result = prime * result + ((trainingName == null) ? 0 : trainingName.hashCode());
 		result = prime * result + ((trainingType == null) ? 0 : trainingType.hashCode());
 		return result;
@@ -133,10 +110,7 @@ public class Batch {
 		Batch other = (Batch) obj;
 		if (batchId != other.batchId)
 			return false;
-		if (cotrainer == null) {
-			if (other.cotrainer != null)
-				return false;
-		} else if (!cotrainer.equals(other.cotrainer))
+		if (cotrainer != other.cotrainer)
 			return false;
 		if (curriculum == null) {
 			if (other.curriculum != null)
@@ -175,15 +149,7 @@ public class Batch {
 				return false;
 		} else if (!startDate.equals(other.startDate))
 			return false;
-		if (trainees == null) {
-			if (other.trainees != null)
-				return false;
-		} else if (!trainees.equals(other.trainees))
-			return false;
-		if (trainer == null) {
-			if (other.trainer != null)
-				return false;
-		} else if (!trainer.equals(other.trainer))
+		if (trainer != other.trainer)
 			return false;
 		if (trainingName == null) {
 			if (other.trainingName != null)
@@ -196,15 +162,6 @@ public class Batch {
 		} else if (!trainingType.equals(other.trainingType))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Batch [resourceId=" + resourceId + ", trainingName=" + trainingName + ", trainer=" + trainer
-				+ ", cotrainer=" + cotrainer + ", skillType=" + skillType + ", trainingType=" + trainingType
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", location=" + location + ", curriculum="
-				+ curriculum + ", skills=" + skills + ", notes=" + notes + ", batchId=" + batchId + ", trainees="
-				+ trainees + "]";
 	}
 
 	public int getResourceId() {
@@ -223,19 +180,19 @@ public class Batch {
 		this.trainingName = trainingName;
 	}
 
-	public Trainer getTrainer() {
+	public int getTrainer() {
 		return trainer;
 	}
 
-	public void setTrainer(Trainer trainer) {
+	public void setTrainer(int trainer) {
 		this.trainer = trainer;
 	}
 
-	public Trainer getCotrainer() {
+	public int getCotrainer() {
 		return cotrainer;
 	}
 
-	public void setCotrainer(Trainer cotrainer) {
+	public void setCotrainer(int cotrainer) {
 		this.cotrainer = cotrainer;
 	}
 
@@ -310,13 +267,5 @@ public class Batch {
 	public void setBatchId(int batchId) {
 		this.batchId = batchId;
 	}
-
-	public List<BatchTrainee> getTrainees() {
-		return trainees;
-	}
-
-	public void setTrainees(List<BatchTrainee> trainees) {
-		this.trainees = trainees;
-	}
-
+	
 }
