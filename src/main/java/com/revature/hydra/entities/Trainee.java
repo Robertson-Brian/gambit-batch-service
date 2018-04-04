@@ -11,8 +11,7 @@ import javax.persistence.Transient;
  * @author Bobby McGetrick
  *
  */
-public class Trainee implements Serializable {
-	private static final long serialVersionUID = -9090223980655307018L;
+public class Trainee {
 
 	@Transient
 	private int traineeId;
@@ -333,14 +332,6 @@ public class Trainee implements Serializable {
 		this.traineeUserInfo = traineeUserInfo;
 	}
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -368,8 +359,6 @@ public class Trainee implements Serializable {
 		result = prime * result + ((trainingStatus == null) ? 0 : trainingStatus.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
