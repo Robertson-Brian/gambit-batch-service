@@ -61,7 +61,7 @@ public class BatchServiceImpl implements BatchService {
 	}
 	
 	/************************************************************************************
-	 * Read
+	 * Read 
 	 ************************************************************************************/
 	/**
 	 * Call BatchRepo's findById() method and return a Batch in the HydraBatch database
@@ -125,7 +125,9 @@ public class BatchServiceImpl implements BatchService {
 	 * 
 	 * @param int id
 	 */
+	@Override
 	public void delete(int id) {
 		batchRepo.deleteByBatchId(id);
 	}
+
 }
