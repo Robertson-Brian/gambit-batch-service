@@ -27,7 +27,7 @@ eureka:
     leaseExpirationDurationInSeconds: 2
   client:
     service-url:
-      defaultZone: http://10.226.124.149:8761/eureka
+      defaultZone: http://localhost:8761/eureka
       
 logging:
   level:
