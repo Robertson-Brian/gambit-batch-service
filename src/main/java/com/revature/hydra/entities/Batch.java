@@ -49,6 +49,9 @@ public class Batch {
 
 	@Transient
 	private Set<Integer> notes;
+	
+	@Transient
+	private Set<Trainee> trainees;
 
 	@Id
 	@Column(name = "batch_id")

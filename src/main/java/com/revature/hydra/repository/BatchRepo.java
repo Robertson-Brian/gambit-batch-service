@@ -18,7 +18,7 @@ public interface BatchRepo extends JpaRepository<Batch, Integer>{
 
 	Batch findByBatchId(int id);
 
-	List<Batch> findByTrainerTrainerId(int id);
+	List<Batch> findByTrainer(int id);
 
 	@Transactional
 	void deleteByBatchId(int id);

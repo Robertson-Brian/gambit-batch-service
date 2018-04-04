@@ -79,7 +79,7 @@ public class BatchServiceImpl implements BatchService {
 	}
 	
 	/**
-	 * Call BatchRepo's findByTrainerId() method and return a List of Batches in the
+	 * Call BatchRepo's findByTrainer() method and return a List of Batches in the
 	 * HydraBatch database with the corresponding id
 	 * 
 	 * @param int id
@@ -88,12 +88,12 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public List<Batch> findByTrainerId(int id) {
-		return batchRepo.findByTrainerTrainerId(id);
+		return batchRepo.findByTrainer(id);
 	}
 	
 	/**
 	 * Call BatchRepo's findAll() method and return a List of all Batches in the
-	 * HydraBatch databased
+	 * HydraBatch database
 	 * 
 	 * @return List<Batch>
 	 */
