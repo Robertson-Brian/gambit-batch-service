@@ -1,4 +1,4 @@
-package com.revature.hydra;
+package com.revature.gambit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,18 +15,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableEurekaClient
 public class Application {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
+
 	@Bean
-	   public Docket api() {
-	       return new Docket(DocumentationType.SWAGGER_2)  
-	         .select()                                  
-	         .apis(RequestHandlerSelectors.basePackage("com.revature.hydra"))              
-	         .paths(PathSelectors.any())                          
-	         .build();
-	   }
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("com.revature.gambit")).paths(PathSelectors.any()).build();
+	}
 
 }
