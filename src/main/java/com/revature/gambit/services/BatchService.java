@@ -1,9 +1,8 @@
-package com.revature.hydra.services;
+package com.revature.gambit.services;
 
 import java.util.List;
 
-import com.revature.hydra.entities.Batch;
-import com.revature.hydra.entities.Trainee;
+import com.revature.gambit.model.Batch;
 
 /**
  * Hydra service for Janus Batches

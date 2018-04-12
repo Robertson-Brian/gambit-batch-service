@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@orcl.cjlbz1oo4tuv.us-east-2.rds.amazonaws.com:1521:ORCL
+    url: jdbc:oracle:thin:@localhost:1521:xe
     username: HydraBatch
     password: p4ssw0rd
   jpa:
