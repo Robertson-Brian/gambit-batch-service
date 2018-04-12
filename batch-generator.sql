@@ -62,11 +62,7 @@ CREATE TABLE batch
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
-/**
-* batch_trainee
-**/
-ALTER TABLE batch_trainee ADD CONSTRAINT batch_id_fk
-    FOREIGN KEY (batch_id) REFERENCES batch (batch_id) ON DELETE CASCADE;
+
 
 /*******************************************************************************
    Create Sequences
