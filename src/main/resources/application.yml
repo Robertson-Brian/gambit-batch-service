@@ -1,12 +1,13 @@
 server:
   port: 8908
- 
+
+# H2 database during development
 spring:
-  datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: HydraBatch
-    password: p4ssw0rd
+  #datasource:
+    #driver-class-name: oracle.jdbc.driver.OracleDriver
+    #url: jdbc:oracle:thin:@localhost:1521:xe
+    #username: dan
+    #password: pickles
   jpa:
     database-platform: org.hibernate.dialect.Oracle10gDialect
     properties:
