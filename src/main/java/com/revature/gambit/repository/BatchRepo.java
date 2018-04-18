@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.revature.gambit.model.Batch;
+import org.springframework.stereotype.Repository;
 
 /**
  * Batch Repository Interface for Hydra Extends JpaReopsitory<Flashcard,

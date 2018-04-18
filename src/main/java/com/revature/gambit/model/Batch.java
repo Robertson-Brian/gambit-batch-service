@@ -1,5 +1,7 @@
 package com.revature.gambit.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 @Entity
+@EntityScan("Batch")
 public class Batch {
 	@Id
 	@Column(name = "batch_id")
