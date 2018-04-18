@@ -10,6 +10,7 @@ server:
 #spring.datasource.driverClassName: org.h2.Driver
 #spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
 
+
 # H2 database during development
 #spring:
 #  #datasource:
