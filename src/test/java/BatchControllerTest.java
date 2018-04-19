@@ -4,18 +4,16 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.hasSize;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -47,11 +45,7 @@ public class BatchControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		mockMvc = MockMvcBuilders.standaloneSetup(batchController)
-				.build();
-		
-		
-		
-		
+				.build();		
 	}
 
 	@Test
@@ -170,5 +164,7 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
 	}
+	
+	
 
 }
