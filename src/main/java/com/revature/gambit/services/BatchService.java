@@ -2,8 +2,6 @@ package com.revature.gambit.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.revature.gambit.model.Batch;
 
 /**
@@ -12,7 +10,6 @@ import com.revature.gambit.model.Batch;
  * @author Bobby McGetrick, Ian Perfitt, Jason Morgan, Matt Mark
  *
  */
-@Service
 public interface BatchService {
 
 	/************************************************************************************

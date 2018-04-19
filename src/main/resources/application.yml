@@ -47,3 +47,7 @@ logging:
       springframework:
         web: DEBUG
       hibernate: INFO
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
