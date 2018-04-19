@@ -27,14 +27,23 @@ import com.revature.gambit.repository.BatchRepo;
 import com.revature.gambit.services.BatchService;
 import com.revature.gambit.services.BatchServiceImpl;
 
+/*
+ * 
+ * Authors:
+ * Yuri Felicio
+ * Malik Biddle
+ * 
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes=BatchService.class)
 public class BatchServiceTest {
 
-	@InjectMocks	
+	@InjectMocks
 	private BatchServiceImpl batchService;
 
+	
 	@Mock
-	BatchRepo batchRepo;
+	private BatchRepo batchrepo;
 	
 	Batch batch1;
 	Batch batch2;
@@ -54,15 +63,15 @@ public class BatchServiceTest {
 		batchService.save(batch1);
 		batchService.save(batch2);
 
-
-		when(batchService.findAll()).thenReturn(batches);
-
-		when(batchService.findById(1)).thenReturn(batch1);
-		when(batchService.findById(2)).thenReturn(batch2);
-		
-		when(batchService.findByTrainerId(10)).thenReturn(batches.subList(0, 1));
-		when(batchService.findByTrainerId(20)).thenReturn(batches.subList(1, 2));
-		
+		// when a batchservice method is called, then return a batch, or batch list
+//		when(batchService.findAll()).thenReturn(batches);
+//
+//		when(batchService.findById(1)).thenReturn(batch1);
+//		when(batchService.findById(2)).thenReturn(batch2);
+//		
+//		when(batchService.findByTrainerId(10)).thenReturn(batches.subList(0, 1));
+//		when(batchService.findByTrainerId(20)).thenReturn(batches.subList(1, 2));
+//		
 	}
 
 	@Test
