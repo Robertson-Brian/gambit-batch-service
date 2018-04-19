@@ -28,7 +28,7 @@ public class Batch {
 
 	@Column(name="RESOURCE_ID")
 	private int resourceId;
-
+	
 	@Column(name="TRAINING_NAME")
 	private String trainingName;
 
@@ -36,7 +36,7 @@ public class Batch {
 	private int trainerId;
 
 	@Column(name="COTRAINER_ID")
-	private int cotrainerId = 0;
+	private int cotrainerId;
 
 	@Column(name="SKILL_TYPE")
 	private int skillTypeId;
@@ -64,7 +64,8 @@ public class Batch {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Batch(int resourceId, String trainingName, int trainerId, int cotrainerId, int skillTypeId, String trainingType, Timestamp startDate, Timestamp endDate, String location, Set<Integer> notes, Set<Integer> trainees) {
+	public Batch(int batchId, int resourceId, String trainingName, int trainerId, int cotrainerId, int skillTypeId, String trainingType, Timestamp startDate, Timestamp endDate, String location, Set<Integer> notes, Set<Integer> trainees) {
+		this.batchId = batchId;
 		this.resourceId = resourceId;
 		this.trainingName = trainingName;
 		this.trainerId = trainerId;

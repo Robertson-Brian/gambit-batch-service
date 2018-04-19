@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Bobby McGetrick
  *
  */
+@Repository
 public interface BatchRepo extends JpaRepository<Batch, Integer> {
 
 	Batch findByBatchId(int id);

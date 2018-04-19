@@ -1,3 +1,4 @@
+package com.revature.controllers;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -64,12 +65,11 @@ public class BatchControllerTest {
 	
 	@Test
 	public void testGetBatchById() throws Exception {
+		Batch batch1 = new Batch(1, 2, "java", 10, 2, 3, "lecturing",null, null, "Reston",
+				null, null);
 
-		Batch batch1 = new Batch(1, 2, "java", 10, 2, "programming", "lecturing", 
-				null, null,"Reston", "Java Full Stack", null, null, null);
-		
-		Batch batch2 = new Batch(2, 2, "pega", 20, 5, "pega stuff", "lecturing", 
-				null, null, "Reston", "Pega", null, null, null);
+		Batch batch2 = new Batch(2, 2, "pega", 20, 5, 4, "lecturing", null, null, "Reston", null,
+				null);
 		
 		when(batchService.findById(1)).thenReturn(batch1);
 		when(batchService.findById(2)).thenReturn(batch2);
@@ -80,15 +80,13 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$.batchId", is(1)))
 				.andExpect(jsonPath("$.resourceId", is(2)))
 				.andExpect(jsonPath("$.trainingName", is("java")))
-				.andExpect(jsonPath("$.trainer", is(10)))
-				.andExpect(jsonPath("$.cotrainer", is(2)))
-				.andExpect(jsonPath("$.skillType", is("programming")))
+				.andExpect(jsonPath("$.trainerId", is(10)))
+				.andExpect(jsonPath("$.cotrainerId", is(2)))
+				.andExpect(jsonPath("$.skillTypeId", is(3)))
 				.andExpect(jsonPath("$.trainingType", is("lecturing")))
 				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.location", is("Reston")))
-				.andExpect(jsonPath("$.curriculum", is("Java Full Stack")))
-				.andExpect(jsonPath("$.skills", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
 		
@@ -98,26 +96,24 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$.batchId", is(2)))
 				.andExpect(jsonPath("$.resourceId", is(2)))
 				.andExpect(jsonPath("$.trainingName", is("pega")))
-				.andExpect(jsonPath("$.trainer", is(20)))
-				.andExpect(jsonPath("$.cotrainer", is(5)))
-				.andExpect(jsonPath("$.skillType", is("pega stuff")))
+				.andExpect(jsonPath("$.trainerId", is(20)))
+				.andExpect(jsonPath("$.cotrainerId", is(5)))
+				.andExpect(jsonPath("$.skillTypeId", is(4)))
 				.andExpect(jsonPath("$.trainingType", is("lecturing")))
 				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.location", is("Reston")))
-				.andExpect(jsonPath("$.curriculum", is("Pega")))
-				.andExpect(jsonPath("$.skills", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
 	}
 	
 	@Test
 	public void testGetBatchByTrainerId() throws Exception {
-		Batch batch1 = new Batch(1, 2, "java", 10, 2, "programming", "lecturing", 
-				null, null,"Reston", "Java Full Stack", null, null, null);
-		
-		Batch batch2 = new Batch(2, 2, "pega", 20, 5, "pega stuff", "lecturing", 
-				null, null, "Reston", "Pega", null, null, null);
+		Batch batch1 = new Batch(1, 2, "java", 10, 2, 3, "lecturing",null, null, "Reston",
+				null, null);
+
+		Batch batch2 = new Batch(2, 2, "pega", 20, 5, 4, "lecturing", null, null, "Reston", null,
+				null);
 		
 		List<Batch> batches1 = new ArrayList<>();
 		batches1.add(0, batch1);
@@ -134,15 +130,13 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].batchId", is(1)))
 				.andExpect(jsonPath("$[0].resourceId", is(2)))
 				.andExpect(jsonPath("$[0].trainingName", is("java")))
-				.andExpect(jsonPath("$[0].trainer", is(10)))
-				.andExpect(jsonPath("$[0].cotrainer", is(2)))
-				.andExpect(jsonPath("$[0].skillType", is("programming")))
+				.andExpect(jsonPath("$[0].trainerId", is(10)))
+				.andExpect(jsonPath("$[0].cotrainerId", is(2)))
+				.andExpect(jsonPath("$[0].skillTypeId", is(3)))
 				.andExpect(jsonPath("$[0].trainingType", is("lecturing")))
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
-				.andExpect(jsonPath("$[0].curriculum", is("Java Full Stack")))
-				.andExpect(jsonPath("$[0].skills", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
 		
@@ -152,15 +146,13 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].batchId", is(2)))
 				.andExpect(jsonPath("$[0].resourceId", is(2)))
 				.andExpect(jsonPath("$[0].trainingName", is("pega")))
-				.andExpect(jsonPath("$[0].trainer", is(20)))
-				.andExpect(jsonPath("$[0].cotrainer", is(5)))
-				.andExpect(jsonPath("$[0].skillType", is("pega stuff")))
+				.andExpect(jsonPath("$[0].trainerId", is(20)))
+				.andExpect(jsonPath("$[0].cotrainerId", is(5)))
+				.andExpect(jsonPath("$[0].skillTypeId", is(4)))
 				.andExpect(jsonPath("$[0].trainingType", is("lecturing")))
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
-				.andExpect(jsonPath("$[0].curriculum", is("Pega")))
-				.andExpect(jsonPath("$[0].skills", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
 	}
