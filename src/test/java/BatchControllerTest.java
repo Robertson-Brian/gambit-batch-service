@@ -51,7 +51,7 @@ public class BatchControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches"))
 			.andExpect(status().isOk())
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 	}
 	
 	@Test 
@@ -59,6 +59,18 @@ public class BatchControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetBatchById() throws Exception {
+		Batch batch = new Batch();
+		batch.setBatchId(1);
+		
+		when(batchService.findById(1)).thenReturn(batch);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/1")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
 	}
 
 }
