@@ -38,7 +38,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Call BatchRepos' save() method and insert the given Batch into the HydraBatch
 	 * database as a new Batch
 	 * 
-	 * @param Batch
+	 * @param newBatch
 	 *            newBatch
 	 * 
 	 * @return Batch
@@ -55,7 +55,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Call BatchRepo's findById() method and return a Batch in the HydraBatch
 	 * database with the corresponding id
 	 * 
-	 * @param int
+	 * @param id
 	 *            id
 	 * 
 	 * @return Batch
@@ -69,14 +69,14 @@ public class BatchServiceImpl implements BatchService {
 	 * Call BatchRepo's findByTrainer() method and return a List of Batches in the
 	 * HydraBatch database with the corresponding id
 	 * 
-	 * @param int
+	 * @param id
 	 *            id
 	 * 
 	 * @return List<Batch>
 	 */
 	@Override
 	public List<Batch> findByTrainerId(int id) {
-		return batchRepo.findByTrainer(id);
+		return batchRepo.findByTrainerId(id);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Call BatchRepo's update() method and update a Batch from the HydraBatch
 	 * database with the corresponding batch_id with the data from the given Batch
 	 * 
-	 * @param Batch
+	 * @param updatedBatch
 	 *            updatedBatch
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Call BatchRepo's delete() method and delete a Batch from the HydraBatch
 	 * database with the corresponding batch_id
 	 * 
-	 * @param int
+	 * @param id
 	 *            id
 	 */
 	@Override
