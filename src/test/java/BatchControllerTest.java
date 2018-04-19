@@ -1,11 +1,18 @@
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.hasSize;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +22,7 @@ import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -39,6 +47,10 @@ public class BatchControllerTest {
 	public void setUp() throws Exception {
 		mockMvc = MockMvcBuilders.standaloneSetup(batchController)
 				.build();
+		
+		
+		
+		
 	}
 
 	@Test
@@ -51,26 +63,61 @@ public class BatchControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches"))
 			.andExpect(status().isOk())
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
-	}
-	
-	@Test 
-	public void testGetAllBatchesJson() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/batches")
-			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isOk());
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(jsonPath("$", hasSize(2)));
 	}
 	
 	@Test
 	public void testGetBatchById() throws Exception {
-		Batch batch = new Batch();
-		batch.setBatchId(1);
+
+		Batch batch1 = new Batch(1, 2,"java", 10, 2,"programming", "lecturing", null, null,"Reston", "Java Full Stack", null, null, null);
 		
-		when(batchService.findById(1)).thenReturn(batch);
+		Batch batch2 = new Batch(2, 2,"pega", 20, 5,"pega stuff", "lecturing", 
+				null, null, "Reston", "Pega", null, null, null);
+		
+		when(batchService.findById(1)).thenReturn(batch1);
+		when(batchService.findById(2)).thenReturn(batch2);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches/1")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.batchId", is(1)))
+				.andExpect(jsonPath("$.resourceId", is(2)))
+				.andExpect(jsonPath("$.trainingName", is("java")))
+				.andExpect(jsonPath("$.trainer", is(10)))
+				.andExpect(jsonPath("$.cotrainer", is(2)))
+				.andExpect(jsonPath("$.skillType", is("programming")))
+				.andExpect(jsonPath("$.trainingType", is("lecturing")))
+				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.location", is("Reston")))
+				.andExpect(jsonPath("$.curriculum", is("Java Full Stack")))
+				.andExpect(jsonPath("$.skills", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/2")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.batchId", is(2)))
+				.andExpect(jsonPath("$.resourceId", is(2)))
+				.andExpect(jsonPath("$.trainingName", is("pega")))
+				.andExpect(jsonPath("$.trainer", is(20)))
+				.andExpect(jsonPath("$.cotrainer", is(5)))
+				.andExpect(jsonPath("$.skillType", is("pega stuff")))
+				.andExpect(jsonPath("$.trainingType", is("lecturing")))
+				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.location", is("Reston")))
+				.andExpect(jsonPath("$.curriculum", is("Pega")))
+				.andExpect(jsonPath("$.skills", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
+	}
+	
+	@Test
+	public void testGetBatchByTrainerId() throws Exception {
+		
 	}
 
 }
