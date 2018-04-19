@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.hasSize;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
@@ -70,9 +71,10 @@ public class BatchControllerTest {
 	@Test
 	public void testGetBatchById() throws Exception {
 
-		Batch batch1 = new Batch(1, 2,"java", 10, 2,"programming", "lecturing", null, null,"Reston", "Java Full Stack", null, null, null);
+		Batch batch1 = new Batch(1, 2, "java", 10, 2, "programming", "lecturing", 
+				null, null,"Reston", "Java Full Stack", null, null, null);
 		
-		Batch batch2 = new Batch(2, 2,"pega", 20, 5,"pega stuff", "lecturing", 
+		Batch batch2 = new Batch(2, 2, "pega", 20, 5, "pega stuff", "lecturing", 
 				null, null, "Reston", "Pega", null, null, null);
 		
 		when(batchService.findById(1)).thenReturn(batch1);
@@ -117,7 +119,56 @@ public class BatchControllerTest {
 	
 	@Test
 	public void testGetBatchByTrainerId() throws Exception {
+		Batch batch1 = new Batch(1, 2, "java", 10, 2, "programming", "lecturing", 
+				null, null,"Reston", "Java Full Stack", null, null, null);
 		
+		Batch batch2 = new Batch(2, 2, "pega", 20, 5, "pega stuff", "lecturing", 
+				null, null, "Reston", "Pega", null, null, null);
+		
+		List<Batch> batches1 = new ArrayList<>();
+		batches1.add(0, batch1);
+		List<Batch> batches2 = new ArrayList<>();
+		batches2.add(0, batch2);
+
+		when(batchService.findByTrainerId(10)).thenReturn(batches1);
+		when(batchService.findByTrainerId(20)).thenReturn(batches2);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/trainers/10")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].batchId", is(1)))
+				.andExpect(jsonPath("$[0].resourceId", is(2)))
+				.andExpect(jsonPath("$[0].trainingName", is("java")))
+				.andExpect(jsonPath("$[0].trainer", is(10)))
+				.andExpect(jsonPath("$[0].cotrainer", is(2)))
+				.andExpect(jsonPath("$[0].skillType", is("programming")))
+				.andExpect(jsonPath("$[0].trainingType", is("lecturing")))
+				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$[0].location", is("Reston")))
+				.andExpect(jsonPath("$[0].curriculum", is("Java Full Stack")))
+				.andExpect(jsonPath("$[0].skills", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/trainers/20")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].batchId", is(2)))
+				.andExpect(jsonPath("$[0].resourceId", is(2)))
+				.andExpect(jsonPath("$[0].trainingName", is("pega")))
+				.andExpect(jsonPath("$[0].trainer", is(20)))
+				.andExpect(jsonPath("$[0].cotrainer", is(5)))
+				.andExpect(jsonPath("$[0].skillType", is("pega stuff")))
+				.andExpect(jsonPath("$[0].trainingType", is("lecturing")))
+				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$[0].location", is("Reston")))
+				.andExpect(jsonPath("$[0].curriculum", is("Pega")))
+				.andExpect(jsonPath("$[0].skills", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
 	}
 
 }
