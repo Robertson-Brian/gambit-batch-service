@@ -33,13 +33,13 @@ public class Batch {
 	private String trainingName;
 
 	@Column(name="TRAINER_ID")
-	private int trainer;
+	private int trainerId;
 
 	@Column(name="COTRAINER_ID")
-	private int cotrainer = 0;
+	private int cotrainerId = 0;
 
 	@Column(name="SKILL_TYPE")
-	private String skillType;
+	private int skillTypeId;
 
 	@Column(name="TRAINING_TYPE")
 	private String trainingType;
@@ -63,19 +63,13 @@ public class Batch {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
-	public Batch(int batchId, int resourceId, String trainingName, int trainer, int cotrainer, String skillType,
-			String trainingType, Timestamp startDate, Timestamp endDate, String location, Set<Integer> notes,
-			Set<Integer> trainees) {
-		super();
-		this.batchId = batchId;
+	public Batch(int resourceId, String trainingName, int trainerId, int cotrainerId, int skillTypeId, String trainingType, Timestamp startDate, Timestamp endDate, String location, Set<Integer> notes, Set<Integer> trainees) {
 		this.resourceId = resourceId;
 		this.trainingName = trainingName;
-		this.trainer = trainer;
-		this.cotrainer = cotrainer;
-		this.skillType = skillType;
+		this.trainerId = trainerId;
+		this.cotrainerId = cotrainerId;
+		this.skillTypeId = skillTypeId;
 		this.trainingType = trainingType;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -84,7 +78,43 @@ public class Batch {
 		this.trainees = trainees;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
+		Batch batch = (Batch) o;
+
+		if (batchId != batch.batchId) return false;
+		if (resourceId != batch.resourceId) return false;
+		if (trainerId != batch.trainerId) return false;
+		if (cotrainerId != batch.cotrainerId) return false;
+		if (skillTypeId != batch.skillTypeId) return false;
+		if (trainingName != null ? !trainingName.equals(batch.trainingName) : batch.trainingName != null) return false;
+		if (trainingType != null ? !trainingType.equals(batch.trainingType) : batch.trainingType != null) return false;
+		if (startDate != null ? !startDate.equals(batch.startDate) : batch.startDate != null) return false;
+		if (endDate != null ? !endDate.equals(batch.endDate) : batch.endDate != null) return false;
+		if (location != null ? !location.equals(batch.location) : batch.location != null) return false;
+		if (notes != null ? !notes.equals(batch.notes) : batch.notes != null) return false;
+		return trainees != null ? trainees.equals(batch.trainees) : batch.trainees == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = batchId;
+		result = 31 * result + resourceId;
+		result = 31 * result + (trainingName != null ? trainingName.hashCode() : 0);
+		result = 31 * result + trainerId;
+		result = 31 * result + cotrainerId;
+		result = 31 * result + skillTypeId;
+		result = 31 * result + (trainingType != null ? trainingType.hashCode() : 0);
+		result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+		result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+		result = 31 * result + (location != null ? location.hashCode() : 0);
+		result = 31 * result + (notes != null ? notes.hashCode() : 0);
+		result = 31 * result + (trainees != null ? trainees.hashCode() : 0);
+		return result;
+	}
 
 	public int getBatchId() {
 		return batchId;
@@ -110,28 +140,28 @@ public class Batch {
 		this.trainingName = trainingName;
 	}
 
-	public int getTrainer() {
-		return trainer;
+	public int getTrainerId() {
+		return trainerId;
 	}
 
-	public void setTrainer(int trainer) {
-		this.trainer = trainer;
+	public void setTrainerId(int trainerId) {
+		this.trainerId = trainerId;
 	}
 
-	public int getCotrainer() {
-		return cotrainer;
+	public int getCotrainerId() {
+		return cotrainerId;
 	}
 
-	public void setCotrainer(int cotrainer) {
-		this.cotrainer = cotrainer;
+	public void setCotrainerId(int cotrainerId) {
+		this.cotrainerId = cotrainerId;
 	}
 
-	public String getSkillType() {
-		return skillType;
+	public int getSkillTypeId() {
+		return skillTypeId;
 	}
 
-	public void setSkillType(String skillType) {
-		this.skillType = skillType;
+	public void setSkillTypeId(int skillTypeId) {
+		this.skillTypeId = skillTypeId;
 	}
 
 	public String getTrainingType() {
@@ -181,96 +211,4 @@ public class Batch {
 	public void setTrainees(Set<Integer> trainees) {
 		this.trainees = trainees;
 	}
-	
-	
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + batchId;
-		result = prime * result + cotrainer;
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
-		result = prime * result + resourceId;
-		result = prime * result + ((skillType == null) ? 0 : skillType.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((trainees == null) ? 0 : trainees.hashCode());
-		result = prime * result + trainer;
-		result = prime * result + ((trainingName == null) ? 0 : trainingName.hashCode());
-		result = prime * result + ((trainingType == null) ? 0 : trainingType.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Batch other = (Batch) obj;
-		if (batchId != other.batchId)
-			return false;
-		if (cotrainer != other.cotrainer)
-			return false;
-		if (endDate == null) {
-			if (other.endDate != null)
-				return false;
-		} else if (!endDate.equals(other.endDate))
-			return false;
-		if (location == null) {
-			if (other.location != null)
-				return false;
-		} else if (!location.equals(other.location))
-			return false;
-		if (notes == null) {
-			if (other.notes != null)
-				return false;
-		} else if (!notes.equals(other.notes))
-			return false;
-		if (resourceId != other.resourceId)
-			return false;
-		if (skillType == null) {
-			if (other.skillType != null)
-				return false;
-		} else if (!skillType.equals(other.skillType))
-			return false;
-		if (startDate == null) {
-			if (other.startDate != null)
-				return false;
-		} else if (!startDate.equals(other.startDate))
-			return false;
-		if (trainees == null) {
-			if (other.trainees != null)
-				return false;
-		} else if (!trainees.equals(other.trainees))
-			return false;
-		if (trainer != other.trainer)
-			return false;
-		if (trainingName == null) {
-			if (other.trainingName != null)
-				return false;
-		} else if (!trainingName.equals(other.trainingName))
-			return false;
-		if (trainingType == null) {
-			if (other.trainingType != null)
-				return false;
-		} else if (!trainingType.equals(other.trainingType))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Batch [batchId=" + batchId + ", resourceId=" + resourceId + ", trainingName=" + trainingName
-				+ ", trainer=" + trainer + ", cotrainer=" + cotrainer + ", skillType=" + skillType + ", trainingType="
-				+ trainingType + ", startDate=" + startDate + ", endDate=" + endDate + ", location=" + location
-				+ ", notes=" + notes + ", trainees=" + trainees + "]";
-	}
-
-	
-
 }
