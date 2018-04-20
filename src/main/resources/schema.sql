@@ -13,7 +13,7 @@ CREATE TABLE batch
     start_date TIMESTAMP NULL,
     trainer_id INT,
     training_name VARCHAR(200),
-    training_type VARCHAR(200),
+    training_type VARCHAR(200)
 );
 --
 CREATE TABLE NOTE_IDS

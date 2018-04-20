@@ -18,38 +18,18 @@ logging:
         web: DEBUG
       hibernate: INFO
 spring:
-  datasource:
-    url: jdbc:h2:mem:test
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
   aop:
     auto: true
   application:
     name: batch-service
 
 
-    # H2 database during development
-    #spring:
-    #  #datasource:
-    #    #driver-class-name: oracle.jdbc.driver.OracleDriver
-    #    #url: jdbc:oracle:thin:@localhost:1521:xe
-    #    #username: dan
-    #    #password: pickles
-    #  jpa:
-    #    database-platform: org.hibernate.dialect.Oracle10gDialect
-    #    properties:
-    #      hibernate:
-    #        show_sql: true
-    #        use_sql_comments: true
-    #        format_sql: true
-    #    hibernate:
-    #      ddl-auto: none
-    #  aop:
-    #    auto: true
-    #  application:
-    #    name: batch-service
 
