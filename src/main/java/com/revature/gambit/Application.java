@@ -5,10 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import com.revature.gambit.model.Batch;
-//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 //import org.springframework.context.annotation.Bean;
 //
 //import springfox.documentation.builders.PathSelectors;
