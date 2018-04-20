@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import com.revature.gambit.services.BatchService;
 import com.revature.gambit.services.BatchServiceImpl;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

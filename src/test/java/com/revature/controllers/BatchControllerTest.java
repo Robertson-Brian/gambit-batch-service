@@ -158,7 +158,7 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp) null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>) null)))
-				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>) null)));
+				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>) null)))
 				.andExpect(jsonPath("$[0].notesIds", is((Set<Integer>)null)))
 				.andExpect(jsonPath("$[0].traineesIds", is((Set<Integer>)null)));
 	}
