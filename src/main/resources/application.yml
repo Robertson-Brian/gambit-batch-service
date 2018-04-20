@@ -1,6 +1,9 @@
 server:
   port: 8908
 
+spring.datasource.url: jdbc:h2:mem:test
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
+
 # Enabling H2 Console
 #spring.datasource.url: jdbc:h2:mem:testdb
 #spring.h2.console.enabled: true
