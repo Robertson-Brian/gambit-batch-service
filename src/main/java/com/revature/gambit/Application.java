@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import com.revature.gambit.model.Batch;
-//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 //import org.springframework.context.annotation.Bean;
 //
 //import springfox.documentation.builders.PathSelectors;
