@@ -83,8 +83,8 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.location", is("Reston")))
-				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
-				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
+				.andExpect(jsonPath("$.notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.traineesIds", is((Set<Integer>)null)));
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches/2")
 				.accept(MediaType.APPLICATION_JSON))
@@ -99,8 +99,8 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$.location", is("Reston")))
-				.andExpect(jsonPath("$.notes", is((Set<Integer>)null)))
-				.andExpect(jsonPath("$.trainees", is((Set<Integer>)null)));
+				.andExpect(jsonPath("$.notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.traineesIds", is((Set<Integer>)null)));
 	}
 	
 	@Test
@@ -133,8 +133,8 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
-				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
-				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
+				.andExpect(jsonPath("$[0].notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].traineesIds", is((Set<Integer>)null)));
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/batches/trainers/20")
 				.accept(MediaType.APPLICATION_JSON))
@@ -149,8 +149,8 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp)null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
-				.andExpect(jsonPath("$[0].notes", is((Set<Integer>)null)))
-				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>)null)));
+				.andExpect(jsonPath("$[0].notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].traineesIds", is((Set<Integer>)null)));
 	}
 	
 	
