@@ -14,16 +14,25 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.revature.gambit.Application;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.repository.BatchRepo;
+import com.revature.gambit.repository.BatchRepoImpl;
 import com.revature.gambit.services.BatchService;
 import com.revature.gambit.services.BatchServiceImpl;
 
@@ -34,16 +43,14 @@ import com.revature.gambit.services.BatchServiceImpl;
  * Malik Biddle
  * 
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes=BatchService.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=Application.class)
 public class BatchServiceTest {
-
-	@InjectMocks
-	private BatchServiceImpl batchService;
-
 	
-	@Mock
-	private BatchRepo batchrepo;
+	
+	@MockBean
+	private BatchService batchService;
+
 	
 	Batch batch1;
 	Batch batch2;
@@ -63,15 +70,6 @@ public class BatchServiceTest {
 		batchService.save(batch1);
 		batchService.save(batch2);
 
-		// when a batchservice method is called, then return a batch, or batch list
-//		when(batchService.findAll()).thenReturn(batches);
-//
-//		when(batchService.findById(1)).thenReturn(batch1);
-//		when(batchService.findById(2)).thenReturn(batch2);
-//		
-//		when(batchService.findByTrainerId(10)).thenReturn(batches.subList(0, 1));
-//		when(batchService.findByTrainerId(20)).thenReturn(batches.subList(1, 2));
-//		
 	}
 
 	@Test
@@ -86,14 +84,10 @@ public class BatchServiceTest {
 	@Test
 	public void testGetBatchById() throws Exception {
 		
-		Batch batchTest1 = batchService.findById(1);
 
-		assertEquals(batch1, batchTest1);
-		
-		
-		Batch batchTest2 = batchService.findById(2);
+		assertEquals(batch1, batchService.findById(1));
 
-		assertEquals(batch2, batchTest2);
+		assertEquals(batch2, batchService.findById(2));
 
 	}
 

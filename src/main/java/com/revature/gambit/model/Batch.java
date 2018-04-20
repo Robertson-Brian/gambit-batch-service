@@ -18,12 +18,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="BATCH")
 public class Batch {
 	@Id
 	@Column(name="BATCH_ID")
 	@SequenceGenerator(name = "BATCH_ID_SEQ", sequenceName = "BATCH_ID_SEQ", allocationSize = 1)
-	@GeneratedValue(generator = "BATCH_ID_SEQ", strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "BATCH_ID_SEQ", strategy = GenerationType.SEQUENCE)
 	private int batchId;
 
 	@Column(name="RESOURCE_ID")
