@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
+@Table(name="BATCH")
 public class Batch {
 	@Id
 	@Column(name="BATCH_ID")
