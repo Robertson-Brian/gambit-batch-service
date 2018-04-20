@@ -10,7 +10,6 @@ spring.datasource.password:
 spring.datasource.driverClassName: org.h2.Driver
 spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
 
-
 # H2 database during development
 #spring:
 #  #datasource:
@@ -37,8 +36,9 @@ spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
 #    leaseRenewalIntervalInSeconds: 1
 #    leaseExpirationDurationInSeconds: 2
 #  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
+#    serviceUrl:
+#      defaultZone: https://gambit-discovery-service-fantastic-cat.cfapps.io:8761/eureka
+#    register-with-eureka: true
 
 logging:
   level:
@@ -51,3 +51,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  aop:
+    auto: true
+  application:
+    name: batch-service

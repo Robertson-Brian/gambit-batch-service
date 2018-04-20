@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface BatchRepo extends JpaRepository<Batch, Integer> {
 
 	Batch findByBatchId(int id);
-
+	
 	List<Batch> findByTrainerId(int id);
 
 }
