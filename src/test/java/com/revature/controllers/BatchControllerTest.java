@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doNothing;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,9 +27,7 @@ import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
@@ -93,6 +91,38 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$.endDate", is((Timestamp) null))).andExpect(jsonPath("$.location", is("Reston")))
 				.andExpect(jsonPath("$.notes", is((Set<Integer>) null)))
 				.andExpect(jsonPath("$.trainees", is((Set<Integer>) null)));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/1")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.batchId", is(1)))
+				.andExpect(jsonPath("$.resourceId", is(2)))
+				.andExpect(jsonPath("$.trainingName", is("java")))
+				.andExpect(jsonPath("$.trainerId", is(10)))
+				.andExpect(jsonPath("$.cotrainerId", is(2)))
+				.andExpect(jsonPath("$.skillTypeId", is(3)))
+				.andExpect(jsonPath("$.trainingType", is("lecturing")))
+				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.location", is("Reston")))
+				.andExpect(jsonPath("$.notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.traineesIds", is((Set<Integer>)null)));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/2")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.batchId", is(2)))
+				.andExpect(jsonPath("$.resourceId", is(2)))
+				.andExpect(jsonPath("$.trainingName", is("pega")))
+				.andExpect(jsonPath("$.trainerId", is(20)))
+				.andExpect(jsonPath("$.cotrainerId", is(5)))
+				.andExpect(jsonPath("$.skillTypeId", is(4)))
+				.andExpect(jsonPath("$.trainingType", is("lecturing")))
+				.andExpect(jsonPath("$.startDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.endDate", is((Timestamp)null)))
+				.andExpect(jsonPath("$.location", is("Reston")))
+				.andExpect(jsonPath("$.notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$.traineesIds", is((Set<Integer>)null)));
 	}
 
 	@Test
@@ -118,6 +148,7 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp) null)))
 				.andExpect(jsonPath("$[0].endDate", is((Timestamp) null)))
 				.andExpect(jsonPath("$[0].location", is("Reston")))
+
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>) null)))
 				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>) null)));
 
@@ -125,6 +156,18 @@ public class BatchControllerTest {
 				.andExpect(status().isOk()).andExpect(jsonPath("$[0].batchId", is(2)))
 				.andExpect(jsonPath("$[0].resourceId", is(2))).andExpect(jsonPath("$[0].trainingName", is("pega")))
 				.andExpect(jsonPath("$[0].trainerId", is(20))).andExpect(jsonPath("$[0].cotrainerId", is(5)))
+
+				.andExpect(jsonPath("$[0].notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].traineesIds", is((Set<Integer>)null)));
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/batches/trainers/20")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].batchId", is(2)))
+				.andExpect(jsonPath("$[0].resourceId", is(2)))
+				.andExpect(jsonPath("$[0].trainingName", is("pega")))
+				.andExpect(jsonPath("$[0].trainerId", is(20)))
+				.andExpect(jsonPath("$[0].cotrainerId", is(5)))
 				.andExpect(jsonPath("$[0].skillTypeId", is(4)))
 				.andExpect(jsonPath("$[0].trainingType", is("lecturing")))
 				.andExpect(jsonPath("$[0].startDate", is((Timestamp) null)))
@@ -132,6 +175,8 @@ public class BatchControllerTest {
 				.andExpect(jsonPath("$[0].location", is("Reston")))
 				.andExpect(jsonPath("$[0].notes", is((Set<Integer>) null)))
 				.andExpect(jsonPath("$[0].trainees", is((Set<Integer>) null)));
+				.andExpect(jsonPath("$[0].notesIds", is((Set<Integer>)null)))
+				.andExpect(jsonPath("$[0].traineesIds", is((Set<Integer>)null)));
 	}
 
 	@Test
