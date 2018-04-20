@@ -47,7 +47,7 @@ import com.revature.gambit.services.BatchServiceImpl;
 public class BatchServiceTest {
 	
 	
-	@MockBean
+	@Autowired
 	private BatchService batchService;
 
 	
