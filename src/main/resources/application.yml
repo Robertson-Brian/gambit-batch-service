@@ -2,44 +2,14 @@ server:
   port: 8908
   
 
-# Enabling H2 Console
-#spring.datasource.url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
-#spring.h2.console.enabled: true
-#spring.h2.console.path: /h2console
-#spring.datasource.username: sa
-#spring.datasource.password:
-#spring.datasource.driverClassName: org.h2.Driver
-#spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
-
-# H2 database during development
-#spring:
-#  #datasource:
-#    #driver-class-name: oracle.jdbc.driver.OracleDriver
-#    #url: jdbc:oracle:thin:@localhost:1521:xe
-#    #username: dan
-#    #password: pickles
-#  jpa:
-#    database-platform: org.hibernate.dialect.Oracle10gDialect
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        use_sql_comments: true
-#        format_sql: true
-#    hibernate:
-#      ddl-auto: none
-#  aop:
-#    auto: true
-#  application:
-#    name: batch-service
-#
-#eureka:
-#  instance:
-#    leaseRenewalIntervalInSeconds: 1
-#    leaseExpirationDurationInSeconds: 2
-#  client:
-#    serviceUrl:
-#      defaultZone: https://gambit-discovery-service-fantastic-cat.cfapps.io:8761/eureka
-#    register-with-eureka: true
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: https://gambit-discovery-service-fantastic-cat.cfapps.io/eureka
+    register-with-eureka: true
 
 logging:
   level:
@@ -54,10 +24,39 @@ spring:
     topic:
       batch: batch.t
   
+  datasource:
+    url: jdbc:h2:mem:test
+
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
   aop:
     auto: true
   application:
     name: batch-service
+
+
+    # H2 database during development
+    #spring:
+    #  #datasource:
+    #    #driver-class-name: oracle.jdbc.driver.OracleDriver
+    #    #url: jdbc:oracle:thin:@localhost:1521:xe
+    #    #username: dan
+    #    #password: pickles
+    #  jpa:
+    #    database-platform: org.hibernate.dialect.Oracle10gDialect
+    #    properties:
+    #      hibernate:
+    #        show_sql: true
+    #        use_sql_comments: true
+    #        format_sql: true
+    #    hibernate:
+    #      ddl-auto: none
+    #  aop:
+    #    auto: true
+    #  application:
+    #    name: batch-service
+

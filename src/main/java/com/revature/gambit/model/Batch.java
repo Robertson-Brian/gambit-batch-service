@@ -6,11 +6,13 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="BATCH")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Batch {
 	@Id
 	@Column(name="BATCH_ID")
@@ -20,7 +22,7 @@ public class Batch {
 
 	@Column(name="RESOURCE_ID")
 	private int resourceId;
-
+	
 	@Column(name="TRAINING_NAME")
 	private String trainingName;
 
@@ -45,10 +47,10 @@ public class Batch {
 	@Column(name="LOCATION")
 	private String location;
 
-	@OneToMany(mappedBy="batchId")
+	@OneToMany(mappedBy="batchId", fetch=FetchType.EAGER)
 	private Set<NoteID> notesIds;
 
-	@OneToMany(mappedBy="batchId")
+	@OneToMany(mappedBy="batchId", fetch=FetchType.EAGER)
 	private Set<TraineeId> traineesIds;
 	
 	public Batch() {
