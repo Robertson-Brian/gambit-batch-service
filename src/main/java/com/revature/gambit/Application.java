@@ -15,8 +15,18 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @SpringBootApplication
 //@EnableSwagger2
 //@EnableEurekaClient
+
+/**
+ * Class Application allowing spring boot to initialize upon call.
+ *
+ */
 public class Application {
 
+	/**
+	 * 
+	 * @param args String args for main
+	 * @param application.class and args used as run parameters.
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

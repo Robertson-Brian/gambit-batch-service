@@ -9,9 +9,9 @@ import com.revature.gambit.model.Batch;
 import com.revature.gambit.repository.BatchRepo;
 
 /**
- * Hydra service implementation for Janus Batches
+ * Gambit service implementation for Janus Batches
  * 
- * @author Bobby McGetrick, Ian Perfitt, Jason Morgan, Matt Mark
+ * @author Nick Zwierzynski
  *
  */
 @Service
@@ -35,7 +35,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Create
 	 ************************************************************************************/
 	/**
-	 * Call BatchRepos' save() method and insert the given Batch into the HydraBatch
+	 * Call BatchRepos' save() method and insert the given Batch into the GambitBatch
 	 * database as a new Batch
 	 * 
 	 * @param Batch
@@ -52,7 +52,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Read
 	 ************************************************************************************/
 	/**
-	 * Call BatchRepo's findById() method and return a Batch in the HydraBatch
+	 * Call BatchRepo's findById() method and return a Batch in the GambitBatch
 	 * database with the corresponding id
 	 * 
 	 * @param int
@@ -67,7 +67,7 @@ public class BatchServiceImpl implements BatchService {
 
 	/**
 	 * Call BatchRepo's findByTrainer() method and return a List of Batches in the
-	 * HydraBatch database with the corresponding id
+	 * GambitBatch database with the corresponding id
 	 * 
 	 * @param int
 	 *            id
@@ -81,7 +81,7 @@ public class BatchServiceImpl implements BatchService {
 
 	/**
 	 * Call BatchRepo's findAll() method and return a List of all Batches in the
-	 * HydraBatch database
+	 * GambitBatch database
 	 * 
 	 * @return List<Batch>
 	 */
@@ -94,7 +94,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Update
 	 ************************************************************************************/
 	/**
-	 * Call BatchRepo's update() method and update a Batch from the HydraBatch
+	 * Call BatchRepo's update() method and update a Batch from the GambitBatch
 	 * database with the corresponding batch_id with the data from the given Batch
 	 * 
 	 * @param Batch
@@ -109,7 +109,7 @@ public class BatchServiceImpl implements BatchService {
 	 * Delete
 	 ************************************************************************************/
 	/**
-	 * Call BatchRepo's delete() method and delete a Batch from the HydraBatch
+	 * Call BatchRepo's delete() method and delete a Batch from the GambitBatch
 	 * database with the corresponding batch_id
 	 * 
 	 * @param int

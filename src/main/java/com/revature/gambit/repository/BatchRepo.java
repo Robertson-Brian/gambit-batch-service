@@ -8,10 +8,10 @@ import com.revature.gambit.model.Batch;
 import org.springframework.stereotype.Repository;
 
 /**
- * Batch Repository Interface for Hydra Extends JpaReopsitory<Flashcard,
+ * Batch Repository Interface for Gambit Extends JpaReopsitory<Flashcard,
  * Integer>
  * 
- * @author Bobby McGetrick
+ * @author Nick Zwierzynski
  *
  */
 public interface BatchRepo extends JpaRepository<Batch, Integer> {

@@ -18,9 +18,9 @@ import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchService;
 
 /**
- * Hydra controller for Janus Batches
+ * Gambit's controller for Janus Batches
  * 
- * @author Bobby McGetrick
+ * @author Nick Zwierzynski
  *
  */
 @RestController
@@ -39,7 +39,7 @@ public class BatchControllerImpl implements BatchController {
 	 ************************************************************************************/
 	/**
 	 * Call BatchService's save() method and insert the given Batch into the
-	 * HydraBatch database as a new Batch
+	 * GambitBatch database as a new Batch
 	 * 
 	 * @param Batch
 	 *            newBatch
@@ -56,7 +56,7 @@ public class BatchControllerImpl implements BatchController {
 	 * Read
 	 ************************************************************************************/
 	/**
-	 * Call BatchService's findById() method and return a Batch from the HydraBatch
+	 * Call BatchService's findById() method and return a Batch from the GambitBatch
 	 * database as a new Batch
 	 * 
 	 * @param int
@@ -72,7 +72,7 @@ public class BatchControllerImpl implements BatchController {
 
 	/**
 	 * Call BatchService's findByTrainerId() method and return a List of Batches
-	 * from the HydraBatch database as a new Batch
+	 * from the GambitBatch database as a new Batch
 	 * 
 	 * @param int
 	 *            id
@@ -87,7 +87,7 @@ public class BatchControllerImpl implements BatchController {
 
 	/**
 	 * Call BatchRepo's findAll() method and return a List of all Batches in the
-	 * HydraBatch database
+	 * GambitBatch database
 	 * 
 	 * @return List<Batch>
 	 */
@@ -101,7 +101,7 @@ public class BatchControllerImpl implements BatchController {
 	 * Update
 	 ************************************************************************************/
 	/**
-	 * Call BatchService's update() method and update a Batch from the HydraBatch
+	 * Call BatchService's update() method and update a Batch from the GambitBatch
 	 * database with the corresponding batch_id with the data from the given Batch
 	 * 
 	 * @param Batch
@@ -117,7 +117,7 @@ public class BatchControllerImpl implements BatchController {
 	 * Delete
 	 ************************************************************************************/
 	/**
-	 * Call BatcService's delete() method and delete a Batch from the HydraBatch
+	 * Call BatchService's delete() method and delete a Batch from the GambitBatch
 	 * database with the corresponding batch_id
 	 * 
 	 * @param int
