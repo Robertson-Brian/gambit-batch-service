@@ -70,9 +70,9 @@ public class BatchControllerTest {
 
 	@Test
 	public void testGetBatchById() throws Exception {
-		Batch batch1 = new Batch(1, 2, "java", 10, 2, 3, "lecturing", null, null, "Reston", null, null);
+		Batch batch1 = new Batch(1, "Nick", 1, 2, 1, "Java", null, null, "Reston");
 
-		Batch batch2 = new Batch(2, 2, "pega", 20, 5, 4, "lecturing", null, null, "Reston", null, null);
+		Batch batch2 =  new Batch(1, "Pega", 1, 2, 1, "Lecturing", null, null, "Reston");
 
 		when(batchService.findById(1)).thenReturn(batch1);
 		when(batchService.findById(2)).thenReturn(batch2);
@@ -113,9 +113,9 @@ public class BatchControllerTest {
 
 	@Test
 	public void testGetBatchByTrainerId() throws Exception {
-		Batch batch1 = new Batch(1, 2, "java", 10, 2, 3, "lecturing", null, null, "Reston", null, null);
+		Batch batch1 = new Batch(1, "Nick", 1, 2, 1, "Java", null, null, "Reston");
 
-		Batch batch2 = new Batch(2, 2, "pega", 20, 5, 4, "lecturing", null, null, "Reston", null, null);
+		Batch batch2 = new Batch(1, "Nick", 1, 2, 1, "Java", null, null, "Reston");
 
 		List<Batch> batches1 = new ArrayList<>();
 		batches1.add(0, batch1);

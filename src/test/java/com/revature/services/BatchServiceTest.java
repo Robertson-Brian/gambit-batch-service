@@ -54,17 +54,14 @@ public class BatchServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Batch newBatch = new Batch(50, 2, "java", 10, 2, 3, "lecturing",null, null, "Reston",
-				null, null);
-		
+		Batch newBatch = new Batch(1, "Nick", 1, 2, 1, "Java", null, null, "Reston");
 		savedBatch = batchService.save(newBatch);
 	}
 
 	@Test
 	public void testSave() throws Exception {
 		// instantiate and save a new batch
-		Batch testBatch = new Batch(20, 7, "pega", 20, 1, 1, "lecturing", null, null, "New York",
-				null, null);
+		Batch testBatch =  new Batch(1, "Nick", 1, 2, 1, "Java", null, null, "Reston");
 		Batch newBatch = batchService.save(testBatch);
 		
 		assertNotEquals(0, savedBatch.getBatchId());
