@@ -23,10 +23,6 @@ public class BatchServiceImpl implements BatchService {
 	/************************************************************************************
 	 * Private fields
 	 ************************************************************************************/
-	private static final String TOPIC = "batch.t";
-	
-	@Autowired
-	private Sender sender;
 	
 	@Autowired
 	private BatchRepo batchRepo;
@@ -53,15 +49,6 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch save(Batch newBatch) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(newBatch);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sender.sendInsert(TOPIC, json);
 		return batchRepo.save(newBatch);
 	}
 
@@ -119,15 +106,6 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public void update(Batch updatedBatch) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(updatedBatch);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sender.sendUpdate(TOPIC, json);
 		batchRepo.save(updatedBatch);
 	}
 
@@ -143,15 +121,6 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public void delete(int id) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(id);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sender.sendDelete(TOPIC, json);
 		batchRepo.delete(id);
 	}
 

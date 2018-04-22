@@ -20,72 +20,97 @@ public class Receiver {
 	BatchServiceImpl batchService;
 	
 	/**
-	 * @param payload add type and json object to update another instance database
+	 * @param payload json object to update another instance database
 	 * 
 	 * also uses unique id for each microservice instance to check if it (mircoservice instance ) was the one that sent it 
+	 * batch_insert is used for inserts
 	 */
-	@KafkaListener(topics="${spring.kafka.topic.batch}")
-	public void recieve(String payload) {
+	@KafkaListener(topics="${spring.kafka.topic.batch.register}")
+	public void recieveInsert(String payload) {
 		ObjectMapper om = new ObjectMapper();
 		System.out.println(payload);
 		
 		String[] a = payload.split(" ");
-		if(a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
-			
-		}
-		else {
-			
-			if(a[1].equals("insert")) {
-				System.out.println(a[2]);
-				try {
-					Batch batch = om.readValue(a[2], Batch.class);
-					batchService.save(batch);
-				} catch (JsonParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else if(a[1].equals("update")) {
-				System.out.println(a[2]);
-				try {
-					Batch batch = om.readValue(a[2], Batch.class);
-					batchService.update(batch);
-				} catch (JsonParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else if(a[1].equals("delete")) {
-				System.out.println(a[2]);
-				try {
-					int id = om.readValue(a[2], Integer.class);
-					batchService.delete(id);
-				} catch (JsonParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else {
-				System.out.println("Did not detect valid service operation");
+		//Checks if the services are different
+		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+			System.out.println(a[1]);
+			try {
+				Batch batch = om.readValue(a[1], Batch.class);
+				batchService.save(batch);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
 		}
+	}
+	
+	
+	/**
+	 * @param payload json object to update another instance database
+	 * 
+	 * also uses unique id for each microservice instance to check if it (mircoservice instance ) was the one that sent it
+	 * batch_update is used for updates 
+	 */
+	@KafkaListener(topics="${spring.kafka.topic.batch.update}")
+	public void recieveUpdate(String payload) {
+		ObjectMapper om = new ObjectMapper();
+		System.out.println(payload);
 		
+		String[] a = payload.split(" ");
+		//Checks if the services are different
+		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+			System.out.println(a[1]);
+			try {
+				Batch batch = om.readValue(a[1], Batch.class);
+				batchService.update(batch);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * @param payload json object to update another instance database
+	 * 
+	 * also uses unique id for each microservice instance to check if it (mircoservice instance ) was the one that sent it
+	 * batch_delete is used for deletes 
+	 */
+	@KafkaListener(topics="${spring.kafka.topic.batch.delete}")
+	public void recieveDelete(String payload) {
+		ObjectMapper om = new ObjectMapper();
+		System.out.println(payload);
+		
+		String[] a = payload.split(" ");
+		//Checks if the services are different
+		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+			System.out.println(a[1]);
+			try {
+				int id = om.readValue(a[1], Integer.class);
+				batchService.delete(id);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

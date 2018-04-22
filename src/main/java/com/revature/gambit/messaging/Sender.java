@@ -24,10 +24,10 @@ public class Sender {
 	 * @param topic which topic it is sending to
 	 * @param payload should be a json object no spaces in it 
 	 */
-	public void sendInsert(String topic, String payload){
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+"insert "+payload;
+	public void sendInsert(String payload){
+		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 		
-		kafkaTemplate.send(topic, payload);
+		kafkaTemplate.send("batch.register.t", payload);
 	}
 		
 	/**
@@ -35,20 +35,20 @@ public class Sender {
 	 * @param topic which topic it is sending to
 	 * @param payload should be a json object no spaces in it 
 	 */
-	public void sendUpdate(String topic, String payload){
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+"update "+payload;
+	public void sendUpdate(String payload){
+		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
-		kafkaTemplate.send(topic, payload);
+		kafkaTemplate.send("batch.update.t", payload);
 	}
 	/**
 	 * sends a message to delete in another instance 
 	 * @param topic which topic it is sending to
 	 * @param payload should be a json object no spaces in it 
 	 */
-	public void sendDelete(String topic, String payload){
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+"delete "+payload;
+	public void sendDelete(String payload){
+		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
-		kafkaTemplate.send(topic, payload);
+		kafkaTemplate.send("batch.delete.t", payload);
 	}
 				
 			

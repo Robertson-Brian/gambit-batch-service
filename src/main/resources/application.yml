@@ -20,9 +20,16 @@ logging:
       hibernate: INFO
 spring:
   kafka:
+  #Kafka Consumer Configurations
+    consumer:
+      auto-offset-reset: earliest
+      group-id: gambit
+    #Kafka Broker Location 
     bootstrap-servers: localhost:9092
     topic:
-      batch: batch.t
+      batch.register: batch.register.t
+      batch.update: batch.update.t
+      batch.delete: batch.delete.t
   
   datasource:
     url: jdbc:h2:mem:test
