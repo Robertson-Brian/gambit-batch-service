@@ -30,7 +30,7 @@ public class Receiver {
 		ObjectMapper om = new ObjectMapper();
 		System.out.println(payload);
 		
-		String[] a = payload.split(" ");
+		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			System.out.println(a[1]);
@@ -62,7 +62,7 @@ public class Receiver {
 		ObjectMapper om = new ObjectMapper();
 		System.out.println(payload);
 		
-		String[] a = payload.split(" ");
+		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			System.out.println(a[1]);
@@ -93,7 +93,7 @@ public class Receiver {
 		ObjectMapper om = new ObjectMapper();
 		System.out.println(payload);
 		
-		String[] a = payload.split(" ");
+		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			System.out.println(a[1]);

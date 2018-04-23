@@ -16,14 +16,14 @@ CREATE TABLE batch
     training_type VARCHAR(200)
 );
 --
-CREATE TABLE NOTE_IDS
+CREATE TABLE BATCH_NOTES
 (
-  batch_id INT ,
+  batch_batch_id INT ,
   note_id INT PRIMARY KEY
 );
 --
-CREATE TABLE TRAINEE_IDS
+CREATE TABLE BATCH_TRAINEES
 (
-  batch_id INT ,
+  batch_batch_id INT ,
   trainee_id INT PRIMARY KEY
 );
