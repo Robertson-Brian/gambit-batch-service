@@ -1,0 +1,13 @@
+server:
+  port: 8908
+
+spring:
+  application:
+    name: batch-service
+  cloud:
+    config:
+      uri: http://68.98.162.173:8888
+
+  security:
+    basic:
+      enabled: false
