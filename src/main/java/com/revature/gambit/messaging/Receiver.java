@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchServiceImpl;
+import com.revature.gambit.util.LoggingUtil;
 
 public class Receiver {
 	
@@ -28,23 +29,17 @@ public class Receiver {
 	@KafkaListener(topics="${spring.kafka.topic.batch.register}")
 	public void recieveInsert(String payload) {
 		ObjectMapper om = new ObjectMapper();
-		System.out.println(payload);
+		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
-			System.out.println(a[1]);
+			LoggingUtil.logInfo(a[1]);
 			try {
 				Batch batch = om.readValue(a[1], Batch.class);
 				batchService.save(batch);
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
+				LoggingUtil.logWarn(e.toString());
 				e.printStackTrace();
 			}
 		}
@@ -60,23 +55,17 @@ public class Receiver {
 	@KafkaListener(topics="${spring.kafka.topic.batch.update}")
 	public void recieveUpdate(String payload) {
 		ObjectMapper om = new ObjectMapper();
-		System.out.println(payload);
+		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
-			System.out.println(a[1]);
+			LoggingUtil.logInfo(a[1]);
 			try {
 				Batch batch = om.readValue(a[1], Batch.class);
 				batchService.update(batch);
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
+				LoggingUtil.logWarn(e.toString());
 				e.printStackTrace();
 			}
 		}
@@ -91,23 +80,17 @@ public class Receiver {
 	@KafkaListener(topics="${spring.kafka.topic.batch.delete}")
 	public void recieveDelete(String payload) {
 		ObjectMapper om = new ObjectMapper();
-		System.out.println(payload);
+		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
 		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
-			System.out.println(a[1]);
+			LoggingUtil.logInfo(a[1]);
 			try {
 				int id = om.readValue(a[1], Integer.class);
 				batchService.delete(id);
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
+				LoggingUtil.logWarn(e.toString());
 				e.printStackTrace();
 			}
 		}
