@@ -82,6 +82,16 @@ public class Receiver {
 		}
 	}
 	
+	
+	
+	@KafkaListener(topics="${spring.kafka.topic.batch.uuid}")
+	public void recieveUUID(String payload) {
+		
+		UUIDService.addUUIDToList(payload);
+					
+	}
+	
+	
 	/**
 	 * @param payload json object to update another instance database
 	 * 

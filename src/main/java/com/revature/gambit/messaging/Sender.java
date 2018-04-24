@@ -20,15 +20,21 @@ public class Sender {
 	UUIDService UUIDService;
 	
 	
+	
 	/**
 	 * sends a message to insert in another instance 
 	 * @param topic which topic it is sending to
 	 * @param payload should be a json object no spaces in it 
 	 */
 	public void sendInsert(String payload){
+		UUIDService.checkuuid();
 		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 		
 		kafkaTemplate.send("batch.register.t", payload);
+	}
+	
+	public void sendUUID(String payload){
+		kafkaTemplate.send("batch.uuid.t", payload);
 	}
 		
 	/**
@@ -37,6 +43,7 @@ public class Sender {
 	 * @param payload should be a json object no spaces in it 
 	 */
 	public void sendUpdate(String payload){
+		UUIDService.checkuuid();
 		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
 		kafkaTemplate.send("batch.update.t", payload);
@@ -47,6 +54,7 @@ public class Sender {
 	 * @param payload should be a json object no spaces in it 
 	 */
 	public void sendDelete(String payload){
+		UUIDService.checkuuid();
 		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
 		kafkaTemplate.send("batch.delete.t", payload);

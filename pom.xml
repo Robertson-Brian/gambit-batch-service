@@ -61,11 +61,7 @@
         </dependency>
         
         <!-- OJDBC in Local Repository -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0</version>
-        </dependency>
+        
         
         <!-- Spring MVC and Web Tools -->
         <dependency>
