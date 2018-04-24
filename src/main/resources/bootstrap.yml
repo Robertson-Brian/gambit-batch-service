@@ -8,7 +8,7 @@ spring:
     name: batch-service
   cloud:
     config:
-      uri: https://gambit-config-server-brash-porcupine.cfapps.io:8888
+      uri: https://gambit-config-server-brash-porcupine.cfapps.io
 
 #Eureka Configuration
 eureka:
