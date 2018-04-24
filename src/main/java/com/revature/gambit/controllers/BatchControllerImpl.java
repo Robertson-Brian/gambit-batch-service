@@ -41,9 +41,8 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's save() method and insert the given Batch into the
 	 * HydraBatch database as a new Batch
 	 * 
-	 * @param Batch
-	 *            newBatch
-	 * 
+	 * @param newBatch Batch
+	 *
 	 * @return Batch
 	 */
 	@PostMapping
@@ -59,9 +58,8 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's findById() method and return a Batch from the HydraBatch
 	 * database as a new Batch
 	 * 
-	 * @param int
-	 *            id
-	 * 
+	 * @param id int
+	 *
 	 * @return Batch
 	 */
 	@GetMapping("{id}")
@@ -74,9 +72,8 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's findByTrainerId() method and return a List of Batches
 	 * from the HydraBatch database as a new Batch
 	 * 
-	 * @param int
-	 *            id
-	 * 
+	 * @param id int
+	 *
 	 * @return List<Batch>
 	 */
 	@GetMapping("trainers/{id}")
@@ -104,8 +101,7 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's update() method and update a Batch from the HydraBatch
 	 * database with the corresponding batch_id with the data from the given Batch
 	 * 
-	 * @param Batch
-	 *            updatedBatch
+	 * @param updatedBatch Batch
 	 */
 	@PutMapping
 	@Override
@@ -120,8 +116,7 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatcService's delete() method and delete a Batch from the HydraBatch
 	 * database with the corresponding batch_id
 	 * 
-	 * @param int
-	 *            id
+	 * @param id int
 	 */
 	@DeleteMapping("{id}")
 	@Override
