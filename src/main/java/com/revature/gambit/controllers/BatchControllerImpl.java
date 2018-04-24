@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.gambit.messaging.Sender;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchService;
+import com.revature.gambit.util.LoggingUtil;
 
 /**
  * Hydra controller for Janus Batches
@@ -60,7 +61,7 @@ public class BatchControllerImpl implements BatchController {
 		try {
 			json = objectMapper.writeValueAsString(newBatch);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			LoggingUtil.logWarn(e.toString());
 			e.printStackTrace();
 		}
 		sender.sendInsert(json);
@@ -130,7 +131,7 @@ public class BatchControllerImpl implements BatchController {
 		try {
 			json = objectMapper.writeValueAsString(updatedBatch);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			LoggingUtil.logWarn(e.toString());
 			e.printStackTrace();
 		}
 		sender.sendUpdate(json);
