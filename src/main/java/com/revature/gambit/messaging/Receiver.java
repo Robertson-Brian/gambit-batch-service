@@ -32,7 +32,6 @@ public class Receiver {
 		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
-		//Checks if the services are different
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {
@@ -58,7 +57,7 @@ public class Receiver {
 		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
-		//Checks if the services are different
+		
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {
@@ -93,7 +92,7 @@ public class Receiver {
 		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
-		//Checks if the services are different
+		
 		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {

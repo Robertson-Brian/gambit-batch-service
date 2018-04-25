@@ -30,6 +30,7 @@ spring:
       batch.register: batch.register.t
       batch.update: batch.update.t
       batch.delete: batch.delete.t
+      batch.uuid: batch.uuid.t
   
   datasource:
     url: jdbc:h2:mem:test
