@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.gambit.messaging.Sender;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchService;
+import com.revature.gambit.util.LoggingUtil;
 
 /**
  * Hydra controller for Janus Batches
@@ -32,6 +36,9 @@ public class BatchControllerImpl implements BatchController {
 	 * Private fields
 	 ************************************************************************************/
 	@Autowired
+	private Sender sender;
+	
+	@Autowired
 	private BatchService batchService;
 
 	/************************************************************************************
@@ -41,14 +48,22 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's save() method and insert the given Batch into the
 	 * HydraBatch database as a new Batch
 	 * 
-	 * @param Batch
-	 *            newBatch
-	 * 
+	 * @param newBatch Batch
+	 *
 	 * @return Batch
 	 */
 	@PostMapping
 	@Override
 	public Batch save(@RequestBody Batch newBatch) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(newBatch);
+		} catch (JsonProcessingException e) {
+			LoggingUtil.logWarn(e.toString());
+			e.printStackTrace();
+		}
+		sender.sendInsert(json);
 		return batchService.save(newBatch);
 	}
 
@@ -59,9 +74,8 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's findById() method and return a Batch from the HydraBatch
 	 * database as a new Batch
 	 * 
-	 * @param int
-	 *            id
-	 * 
+	 * @param id int
+	 *
 	 * @return Batch
 	 */
 	@GetMapping("{id}")
@@ -74,9 +88,8 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's findByTrainerId() method and return a List of Batches
 	 * from the HydraBatch database as a new Batch
 	 * 
-	 * @param int
-	 *            id
-	 * 
+	 * @param id int
+	 *
 	 * @return List<Batch>
 	 */
 	@GetMapping("trainers/{id}")
@@ -104,12 +117,20 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatchService's update() method and update a Batch from the HydraBatch
 	 * database with the corresponding batch_id with the data from the given Batch
 	 * 
-	 * @param Batch
-	 *            updatedBatch
+	 * @param updatedBatch Batch
 	 */
 	@PutMapping
 	@Override
 	public void update(@RequestBody Batch updatedBatch) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(updatedBatch);
+		} catch (JsonProcessingException e) {
+			LoggingUtil.logWarn(e.toString());
+			e.printStackTrace();
+		}
+		sender.sendUpdate(json);
 		batchService.update(updatedBatch);
 	}
 
@@ -120,12 +141,12 @@ public class BatchControllerImpl implements BatchController {
 	 * Call BatcService's delete() method and delete a Batch from the HydraBatch
 	 * database with the corresponding batch_id
 	 * 
-	 * @param int
-	 *            id
+	 * @param id int
 	 */
 	@DeleteMapping("{id}")
 	@Override
 	public void delete(@PathVariable int id) {
+		sender.sendDelete(String.valueOf(id));
 		batchService.delete(id);
 	}
 }
