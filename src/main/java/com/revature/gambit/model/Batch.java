@@ -18,7 +18,7 @@ public class Batch {
 
 	@Column(name="RESOURCE_ID")
 	private int resourceId;
-	
+
 	@Column(name="TRAINING_NAME")
 	private String trainingName;
 
@@ -43,29 +43,14 @@ public class Batch {
 	@Column(name="LOCATION")
 	private String location;
 
-	@JsonIgnore
 	@ElementCollection
 	private Set<Integer> notes;
 
-	@JsonIgnore
 	@ElementCollection
 	private Set<Integer> trainees;
-	
+
 	public Batch() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Batch(int resourceId, String trainingName, int trainerId, int cotrainerId, int skillTypeId, String trainingType, Timestamp startDate, Timestamp endDate, String location) {
-		this.resourceId = resourceId;
-		this.trainingName = trainingName;
-		this.trainerId = trainerId;
-		this.cotrainerId = cotrainerId;
-		this.skillTypeId = skillTypeId;
-		this.trainingType = trainingType;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.location = location;
 	}
 
 	@Override
