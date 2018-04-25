@@ -31,6 +31,9 @@ spring:
       batch.update: batch.update.t
       batch.delete: batch.delete.t
       batch.uuid: batch.uuid.t
+      trainee.register: trainee.register.t
+      trainee.update: trainee.update.t
+      trainee.delete: trainee.delete.t
   
   datasource:
     url: jdbc:h2:mem:test
