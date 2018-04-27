@@ -46,29 +46,36 @@ public class UUIDService {
 	   }
 	public void checkuuid() {
 		if (checked==0) {
-			if(listUUID.isEmpty()) {
-					sender.sendUUID(serviceInstanceIdentifier.toString());
-					checked=1;
-			     
+			checkPartTwo();
+		}
+	}
+	
+	public void checkPartTwo() {
+		if(listUUID.isEmpty()) {
+			sender.sendUUID(serviceInstanceIdentifier.toString());
+			checked=1;
+	     
+		}
+		else {
+			checkPartThree();
+		}
+	}
+	
+	public void checkPartThree() {
+		int a=0;
+		while(a!=1) {
+			UUID temp = UUID.randomUUID();
+			for (UUID i:listUUID) {
+				if(temp.equals(i)){
+					temp = UUID.randomUUID();
+					a=-1;
 				}
-				else {
-					int a=0;
-					while(a!=1) {
-						UUID temp = UUID.randomUUID();
-						for (UUID i:listUUID) {
-							if(temp.equals(i)){
-								temp = UUID.randomUUID();
-								a=-1;
-							}
-						}
-						if (a==0) {
-							serviceInstanceIdentifier = temp;
-							sender.sendUUID(serviceInstanceIdentifier.toString());
-							checked=1;
-							a=1;
-						}
-						
-					}
+			}
+			if (a==0) {
+				serviceInstanceIdentifier = temp;
+				sender.sendUUID(serviceInstanceIdentifier.toString());
+				checked=1;
+				a=1;
 			}
 		}
 	}
