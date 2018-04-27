@@ -171,58 +171,58 @@
         <plugins>
              <!--Docker Maven Plugin from Spotify-->
              <!--Abstracts the process of creating Docker images from Java projects-->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.10</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <!-- Docker Plugin Configuration -->
-                <configuration>
-                    <!-- Dynamically generating image name from project name -->
-                    <imageName>gambit/${project.artifactId}</imageName>
-                    
-                    <!-- Virtual Machine with Docker location -->
-                    <dockerHost>${env.DOCKER_HOST_URL}</dockerHost>
-                    
-                    <!-- We are using HTTPS, so we need certificates -->
-                    <dockerCertPath>${env.DOCKER_CERT_PATH}</dockerCertPath>
-                    
-                    <!-- All images are dependent on Java 8 -->
-                    <baseImage>java:8</baseImage>
-                    
-                    <!-- When we do "docker run imageName" within the docker instance -->
-                    <!-- It will run this as a command -->
-                    <!-- java -jar /opt/NameOfTheJar.jar -->
-                    <entryPoint>
-                        ["java", "-jar", "/opt/${project.build.finalName}.jar"]
-                    </entryPoint>
-                    
-                    <!-- There is something called Docker Hub -->
-                    <!-- You can push your images to the cloud for collaboration -->
-                    <pushImage>false</pushImage>
-                    
-                    <!-- Resources -->
-                    <resources>
-                        <resource>
-                            <targetPath>/opt/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <excludes>
-                                <exclude>target/**/*</exclude>
-                                <exclude>pom.xml</exclude>
-                                <exclude>*.iml</exclude>
-                            </excludes>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.spotify</groupId>-->
+                <!--<artifactId>docker-maven-plugin</artifactId>-->
+                <!--<version>0.4.10</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>build</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--&lt;!&ndash; Docker Plugin Configuration &ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash; Dynamically generating image name from project name &ndash;&gt;-->
+                    <!--<imageName>gambit/${project.artifactId}</imageName>-->
+                    <!---->
+                    <!--&lt;!&ndash; Virtual Machine with Docker location &ndash;&gt;-->
+                    <!--<dockerHost>${env.DOCKER_HOST_URL}</dockerHost>-->
+                    <!---->
+                    <!--&lt;!&ndash; We are using HTTPS, so we need certificates &ndash;&gt;-->
+                    <!--<dockerCertPath>${env.DOCKER_CERT_PATH}</dockerCertPath>-->
+                    <!---->
+                    <!--&lt;!&ndash; All images are dependent on Java 8 &ndash;&gt;-->
+                    <!--<baseImage>java:8</baseImage>-->
+                    <!---->
+                    <!--&lt;!&ndash; When we do "docker run imageName" within the docker instance &ndash;&gt;-->
+                    <!--&lt;!&ndash; It will run this as a command &ndash;&gt;-->
+                    <!--&lt;!&ndash; java -jar /opt/NameOfTheJar.jar &ndash;&gt;-->
+                    <!--<entryPoint>-->
+                        <!--["java", "-jar", "/opt/${project.build.finalName}.jar"]-->
+                    <!--</entryPoint>-->
+                    <!---->
+                    <!--&lt;!&ndash; There is something called Docker Hub &ndash;&gt;-->
+                    <!--&lt;!&ndash; You can push your images to the cloud for collaboration &ndash;&gt;-->
+                    <!--<pushImage>false</pushImage>-->
+                    <!---->
+                    <!--&lt;!&ndash; Resources &ndash;&gt;-->
+                    <!--<resources>-->
+                        <!--<resource>-->
+                            <!--<targetPath>/opt/</targetPath>-->
+                            <!--<directory>${project.build.directory}</directory>-->
+                            <!--<excludes>-->
+                                <!--<exclude>target/**/*</exclude>-->
+                                <!--<exclude>pom.xml</exclude>-->
+                                <!--<exclude>*.iml</exclude>-->
+                            <!--</excludes>-->
+                            <!--<include>${project.build.finalName}.jar</include>-->
+                        <!--</resource>-->
+                    <!--</resources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             
             <!-- CodeHaus MOJO -->
             <plugin>
