@@ -44,24 +44,34 @@ public class UUIDService {
 	public void addUUIDToList(String uuid){
 		listUUID.add(UUID.fromString(uuid));
 	   }
+	
+	/**
+	 * Sees if it has been checked before
+	 */
 	public void checkuuid() {
 		if (checked==0) {
-			checkPartTwo();
+			sendIfListIsEmpty();
 		}
 	}
 	
-	public void checkPartTwo() {
+	/**
+	 * sends UUID to kafka if there is no UUID in kafka (starts list)
+	 */
+	public void sendIfListIsEmpty() {
 		if(listUUID.isEmpty()) {
 			sender.sendUUID(serviceInstanceIdentifier.toString());
 			checked=1;
 	     
 		}
 		else {
-			checkPartThree();
+			checkToSeeIfUuidIsInList();
 		}
 	}
 	
-	public void checkPartThree() {
+	/**
+	 * goes threw list to make sure uuid is not duplicatied 
+	 */
+	public void checkToSeeIfUuidIsInList() {
 		int a=0;
 		while(a!=1) {
 			UUID temp = UUID.randomUUID();
@@ -79,6 +89,7 @@ public class UUIDService {
 			}
 		}
 	}
+	
 	public UUID getServiceInstanceIdentifier(){
 		   return this.serviceInstanceIdentifier;
 	   }
