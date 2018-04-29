@@ -1,4 +1,5 @@
 package com.revature.gambit.messaging;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,8 +18,8 @@ public class UUIDService {
 	Sender sender;
 	private static UUIDService instance = null;
 	private int checked= 0;
-	private List<UUID>listUUID;
-	private UUID serviceInstanceIdentifier;
+	private List<UUID>listUUID = new ArrayList<UUID>();
+	private UUID serviceInstanceIdentifier=UUID.randomUUID();
 	   
 	   /**
 	 *  Creates instance of a random UUID
