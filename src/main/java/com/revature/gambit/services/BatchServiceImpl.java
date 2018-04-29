@@ -2,12 +2,11 @@ package com.revature.gambit.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.gambit.messaging.Sender;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.repository.BatchRepo;
 
@@ -18,6 +17,7 @@ import com.revature.gambit.repository.BatchRepo;
  *
  */
 @Service
+@Transactional
 public class BatchServiceImpl implements BatchService {
 
 	/************************************************************************************
@@ -49,7 +49,9 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch save(Batch newBatch) {
-		return batchRepo.save(newBatch);
+		newBatch = batchRepo.save(newBatch);
+		Hibernate.initialize(newBatch.getTrainees());
+		return newBatch;
 	}
 
 	/************************************************************************************
@@ -66,7 +68,9 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch findById(int id) {
-		return batchRepo.findByBatchId(id);
+		Batch batch = batchRepo.findByBatchId(id);
+		Hibernate.initialize(batch.getTrainees());
+		return batch;
 	}
 
 	/**

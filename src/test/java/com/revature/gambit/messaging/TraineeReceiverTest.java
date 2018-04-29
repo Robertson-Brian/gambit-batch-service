@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.model.TraineeDTO;
 import com.revature.gambit.repository.BatchRepo;
+import com.revature.gambit.services.BatchServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -53,6 +54,9 @@ public class TraineeReceiverTest {
 	
 	@Autowired
 	private BatchRepo repo;
+	
+	@Autowired
+	private BatchServiceImpl service;
 	
 	private KafkaTemplate<String, String> template;
 	
@@ -110,7 +114,7 @@ public class TraineeReceiverTest {
 	public void testReceiveInsert() throws Exception {
 		// add a batch to the repo
 		Batch testBatch = new Batch();
-		testBatch = repo.save(testBatch);
+		testBatch = service.save(testBatch);
 		// add the batches Id to a set
 		Set<Integer> batchId = new HashSet<Integer>();
 		batchId.add(testBatch.getBatchId());
@@ -124,6 +128,55 @@ public class TraineeReceiverTest {
 	    // check that the message was received
 	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
 	    // check that the batch now contains the Trainee's id
-	    assertThat(repo.findByBatchId(testBatch.getBatchId()).getTrainees().contains(1));
+	    assertThat(service.findById(testBatch.getBatchId()).getTrainees().contains(1));
+	}
+	
+	@Test
+	public void testReceiveUpdate() throws Exception {
+		// add a batch to the repo
+		Batch testBatch = new Batch();
+		testBatch = service.save(testBatch);
+		// add the batches Id to a set
+		Set<Integer> batchId = new HashSet<Integer>();
+		batchId.add(testBatch.getBatchId());
+		// send message with TraineeDTO payload
+		TraineeDTO trainee = new TraineeDTO(1, batchId);
+		String traineeJSON = MAPPER.writeValueAsString(trainee);
+		template.send(TRAINEE_UPDATE_TOPIC, traineeJSON);
+		LOGGER.debug("test-sender sent update message='{}'", traineeJSON);
+		
+	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+	    // check that the message was received
+	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+	    // check that the batch now contains the Trainee's id
+	    assertThat(service.findById(testBatch.getBatchId()).getTrainees().contains(1));
+	}
+	
+	@Test
+	public void testReceiveDelete() throws Exception {
+		// add a batch to the repo
+		Batch testBatch = new Batch();
+		testBatch = service.save(testBatch);
+		// add the batches Id to a set
+		Set<Integer> batchId = new HashSet<Integer>();
+		batchId.add(testBatch.getBatchId());
+		// Create a trainee to add to the set
+		TraineeDTO trainee = new TraineeDTO(1, batchId);
+		// add the trainee's id to the testBatch's trainees
+		Set<Integer> traineeId = new HashSet<Integer>();
+		traineeId.add(trainee.getUserId());
+		testBatch.setTrainees(traineeId);
+		// update the batch in the repo
+		testBatch = service.save(testBatch);
+		// send a delete message with the trainee in the payload
+		String traineeJSON = MAPPER.writeValueAsString(trainee);
+		template.send(TRAINEE_DELETE_TOPIC, traineeJSON);
+		LOGGER.debug("test-sender sent delete message='{}'", traineeJSON);
+	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+	    // check that the message was received
+	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+	    // check that the batch now doesn't contain the trainee's Id
+	    assertThat(service.findById(testBatch.getBatchId()).getTrainees().contains(1)).isFalse();
+		
 	}
 }
