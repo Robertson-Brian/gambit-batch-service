@@ -2,7 +2,9 @@ package com.revature.gambit.messaging;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -27,6 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.gambit.model.Batch;
+import com.revature.gambit.model.TraineeDTO;
 import com.revature.gambit.repository.BatchRepo;
 
 @RunWith(SpringRunner.class)
@@ -101,5 +104,26 @@ public class TraineeReceiverTest {
 	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
 	    // check that the message was received
 	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+	}
+	
+	@Test
+	public void testReceiveInsert() throws Exception {
+		// add a batch to the repo
+		Batch testBatch = new Batch();
+		testBatch = repo.save(testBatch);
+		// add the batches Id to a set
+		Set<Integer> batchId = new HashSet<Integer>();
+		batchId.add(testBatch.getBatchId());
+		// send message with TraineeDTO payload
+		TraineeDTO trainee = new TraineeDTO(1, batchId);
+		String traineeJSON = MAPPER.writeValueAsString(trainee);
+		template.send(TRAINEE_REGISTER_TOPIC, traineeJSON);
+		LOGGER.debug("test-sender sent insert message='{}'", traineeJSON);
+		
+	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+	    // check that the message was received
+	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+	    // check that the batch now contains the Trainee's id
+	    assertThat(repo.findByBatchId(testBatch.getBatchId()).getTrainees().contains(1));
 	}
 }
