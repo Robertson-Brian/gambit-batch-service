@@ -2,7 +2,6 @@ package com.revature.gambit.messaging;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.kafka.common.network.Send;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,34 +43,52 @@ public class UUIDService {
 	public void addUUIDToList(String uuid){
 		listUUID.add(UUID.fromString(uuid));
 	   }
+	
+	/**
+	 * Sees if it has been checked before
+	 */
 	public void checkuuid() {
 		if (checked==0) {
-			if(listUUID.isEmpty()) {
-					sender.sendUUID(serviceInstanceIdentifier.toString());
-					checked=1;
-			     
+			sendIfListIsEmpty();
+		}
+	}
+	
+	/**
+	 * sends UUID to kafka if there is no UUID in kafka (starts list)
+	 */
+	public void sendIfListIsEmpty() {
+		if(listUUID.isEmpty()) {
+			sender.sendUUID(serviceInstanceIdentifier.toString());
+			checked=1;
+	     
+		}
+		else {
+			checkToSeeIfUuidIsInList();
+		}
+	}
+	
+	/**
+	 * goes threw list to make sure uuid is not duplicatied 
+	 */
+	public void checkToSeeIfUuidIsInList() {
+		int a=0;
+		while(a!=1) {
+			UUID temp = UUID.randomUUID();
+			for (UUID i:listUUID) {
+				if(temp.equals(i)){
+					temp = UUID.randomUUID();
+					a=-1;
 				}
-				else {
-					int a=0;
-					while(a!=1) {
-						UUID temp = UUID.randomUUID();
-						for (UUID i:listUUID) {
-							if(temp.equals(i)){
-								temp = UUID.randomUUID();
-								a=-1;
-							}
-						}
-						if (a==0) {
-							serviceInstanceIdentifier = temp;
-							sender.sendUUID(serviceInstanceIdentifier.toString());
-							checked=1;
-							a=1;
-						}
-						
-					}
+			}
+			if (a==0) {
+				serviceInstanceIdentifier = temp;
+				sender.sendUUID(serviceInstanceIdentifier.toString());
+				checked=1;
+				a=1;
 			}
 		}
 	}
+	
 	public UUID getServiceInstanceIdentifier(){
 		   return this.serviceInstanceIdentifier;
 	   }

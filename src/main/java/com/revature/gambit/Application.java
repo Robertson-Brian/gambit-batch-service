@@ -1,5 +1,10 @@
 package com.revature.gambit;
 
+
+import com.revature.gambit.services.BatchService;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -15,6 +20,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableEurekaClient
 public class Application {
+
+	static Logger log = Logger.getLogger(Application.class.getName());
+
+	@Autowired
+	private static BatchService batchService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
