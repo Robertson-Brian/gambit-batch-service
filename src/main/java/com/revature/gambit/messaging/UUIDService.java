@@ -25,7 +25,7 @@ public class UUIDService {
 	 */
 	private UUIDService(){
 
-		listUUID = new ArrayList<UUID>();
+		listUUID = new ArrayList<>();
 		serviceInstanceIdentifier = UUID.randomUUID();
 	     
 	}

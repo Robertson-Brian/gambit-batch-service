@@ -16,18 +16,17 @@ public class Sender {
 	private KafkaTemplate<String, String> kafkaTemplate;
 	
 	@Autowired
-	UUIDService UUIDService;
+	UUIDService uuidService;
 	
 	
 	
 	/**
 	 * sends a message to insert in another instance 
-	 * @param topic which topic it is sending to
-	 * @param payload should be a json object no spaces in it 
+	 * @param payload should be a json object no spaces in it
 	 */
 	public void sendInsert(String payload){
-		UUIDService.checkuuid();
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
+		uuidService.checkuuid();
+		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
 		
 		kafkaTemplate.send("batch.register.t", payload);
 	}
@@ -38,23 +37,21 @@ public class Sender {
 		
 	/**
 	 * sends a message to update in another instance 
-	 * @param topic which topic it is sending to
-	 * @param payload should be a json object no spaces in it 
+	 * @param payload should be a json object no spaces in it
 	 */
 	public void sendUpdate(String payload){
-		UUIDService.checkuuid();
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
+		uuidService.checkuuid();
+		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
 		kafkaTemplate.send("batch.update.t", payload);
 	}
 	/**
 	 * sends a message to delete in another instance 
-	 * @param topic which topic it is sending to
-	 * @param payload should be a json object no spaces in it 
+	 * @param payload should be a json object no spaces in it
 	 */
 	public void sendDelete(String payload){
-		UUIDService.checkuuid();
-		payload=UUIDService.getServiceInstanceIdentifier().toString()+" "+payload;
+		uuidService.checkuuid();
+		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
 			
 		kafkaTemplate.send("batch.delete.t", payload);
 	}
