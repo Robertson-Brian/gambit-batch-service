@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.revature</groupId>
-    <artifactId>gambit-skill-service</artifactId>
+    <artifactId>gambit-batch-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <description>MicroService in Gambit Ecosystem used to manage the state of Skills and SkillType resources for projects such as Caliber and AssignForce.</description>
-    <name>Gambit Skill Service</name>
+    <description>MicroService in Gambit Ecosystem used to manage the state of Batch resources for projects such as Caliber and AssignForce.</description>
+    <name>Gambit Batch Service</name>
     
     <parent>
         <groupId>org.springframework.boot</groupId>
