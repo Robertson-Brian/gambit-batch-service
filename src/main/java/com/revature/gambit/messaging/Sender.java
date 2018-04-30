@@ -34,10 +34,10 @@ public class Sender {
 	 * @param payload object to be sent in message
 	 */
 	public void send(String topic, Object payload) {
-		UUIDService.checkuuid();
+		uuidService.checkuuid();
 		logger.info("Sending payload for topic: " + topic);
 		try {
-			String message = UUIDService.getServiceInstanceIdentifier().toString()+" "+mapper.writeValueAsString(payload);
+			String message = uuidService.getServiceInstanceIdentifier().toString()+" "+mapper.writeValueAsString(payload);
 			logger.info("Sending message: "+ message);
 			kafkaTemplate.send(topic, message);
 		} catch (Exception e) {
