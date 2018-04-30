@@ -1,14 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>revature</groupId>
-    <artifactId>gambit-batch-service</artifactId>
+    <groupId>com.revature</groupId>
+    <artifactId>gambit-skill-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <description>MicroService in Gambit Ecosystem used to manage the state of Skills and SkillType resources for projects such as Caliber and AssignForce.</description>
+    <name>Gambit Skill Service</name>
     
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.12.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     
@@ -16,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <spring-cloud.version>Edgware.SR1</spring-cloud.version>
     </properties>
     
     <dependencies>
@@ -152,7 +157,8 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.9</version>
         </dependency>
-        
+    
+    
     </dependencies>
     
     <dependencyManagement>
@@ -164,65 +170,81 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.2.16.Final</version>
+            </dependency>
+        
         </dependencies>
     </dependencyManagement>
     
     <build>
         <plugins>
-             <!--Docker Maven Plugin from Spotify-->
-             <!--Abstracts the process of creating Docker images from Java projects-->
-            <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>docker-maven-plugin</artifactId>-->
-                <!--<version>0.4.10</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>build</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--&lt;!&ndash; Docker Plugin Configuration &ndash;&gt;-->
-                <!--<configuration>-->
-                    <!--&lt;!&ndash; Dynamically generating image name from project name &ndash;&gt;-->
-                    <!--<imageName>gambit/${project.artifactId}</imageName>-->
-                    <!---->
-                    <!--&lt;!&ndash; Virtual Machine with Docker location &ndash;&gt;-->
-                    <!--<dockerHost>${env.DOCKER_HOST_URL}</dockerHost>-->
-                    <!---->
-                    <!--&lt;!&ndash; We are using HTTPS, so we need certificates &ndash;&gt;-->
-                    <!--<dockerCertPath>${env.DOCKER_CERT_PATH}</dockerCertPath>-->
-                    <!---->
-                    <!--&lt;!&ndash; All images are dependent on Java 8 &ndash;&gt;-->
-                    <!--<baseImage>java:8</baseImage>-->
-                    <!---->
-                    <!--&lt;!&ndash; When we do "docker run imageName" within the docker instance &ndash;&gt;-->
-                    <!--&lt;!&ndash; It will run this as a command &ndash;&gt;-->
-                    <!--&lt;!&ndash; java -jar /opt/NameOfTheJar.jar &ndash;&gt;-->
-                    <!--<entryPoint>-->
-                        <!--["java", "-jar", "/opt/${project.build.finalName}.jar"]-->
-                    <!--</entryPoint>-->
-                    <!---->
-                    <!--&lt;!&ndash; There is something called Docker Hub &ndash;&gt;-->
-                    <!--&lt;!&ndash; You can push your images to the cloud for collaboration &ndash;&gt;-->
-                    <!--<pushImage>false</pushImage>-->
-                    <!---->
-                    <!--&lt;!&ndash; Resources &ndash;&gt;-->
-                    <!--<resources>-->
-                        <!--<resource>-->
-                            <!--<targetPath>/opt/</targetPath>-->
-                            <!--<directory>${project.build.directory}</directory>-->
-                            <!--<excludes>-->
-                                <!--<exclude>target/**/*</exclude>-->
-                                <!--<exclude>pom.xml</exclude>-->
-                                <!--<exclude>*.iml</exclude>-->
-                            <!--</excludes>-->
-                            <!--<include>${project.build.finalName}.jar</include>-->
-                        <!--</resource>-->
-                    <!--</resources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <!-- Javadocs Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <reportOutputDirectory>Documentation</reportOutputDirectory>
+                    <destDir>Javadocs</destDir>
+                </configuration>
+            </plugin>
+            <!--Docker Maven Plugin from Spotify -->
+            <!--Abstracts the process of creating Docker images from Java projects -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.10</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- Docker Plugin Configuration -->
+                <configuration>
+                    <!-- Dynamically generating image name from project name -->
+                    <imageName>gambit/${project.artifactId}</imageName>
+                    
+                    <!-- Virtual Machine with Docker location -->
+                    <dockerHost>${env.DOCKER_HOST_URL}</dockerHost>
+                    
+                    <!-- We are using HTTPS, so we need certificates -->
+                    <dockerCertPath>${env.DOCKER_CERT_PATH}</dockerCertPath>
+                    
+                    <!-- All images are dependent on Java 8 -->
+                    <baseImage>java:8</baseImage>
+                    
+                    <!-- When we do "docker run imageName" within the docker instance -->
+                    <!-- It will run this as a command -->
+                    <!-- java -jar /opt/NameOfTheJar.jar -->
+                    <entryPoint>
+                        ["java", "-jar", "/opt/${project.build.finalName}.jar"]
+                    </entryPoint>
+                    
+                    <!-- There is something called Docker Hub -->
+                    <!-- You can push your images to the cloud for collaboration -->
+                    <pushImage>false</pushImage>
+                    
+                    <!-- Resources -->
+                    <resources>
+                        <resource>
+                            <targetPath>/opt/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <excludes>
+                                <exclude>target/**/*</exclude>
+                                <exclude>pom.xml</exclude>
+                                <exclude>*.iml</exclude>
+                            </excludes>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
             
             <!-- CodeHaus MOJO -->
             <plugin>
@@ -230,13 +252,47 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <!-- Change this to match path to actual Main class -->
-                    <mainClass>com.revature.gambit.Application</mainClass>
+                    <mainClass>com.revature.gambit.skill.Application</mainClass>
                 </configuration>
             </plugin>
             
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
