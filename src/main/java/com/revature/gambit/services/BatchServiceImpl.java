@@ -2,8 +2,10 @@ package com.revature.gambit.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.repository.BatchRepo;
@@ -15,6 +17,7 @@ import com.revature.gambit.repository.BatchRepo;
  *
  */
 @Service
+@Transactional
 public class BatchServiceImpl implements BatchService {
 
 	/************************************************************************************
@@ -46,7 +49,10 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch save(Batch newBatch) {
-		return batchRepo.save(newBatch);
+		newBatch = batchRepo.save(newBatch);
+		Hibernate.initialize(newBatch.getTrainees());
+		Hibernate.initialize(newBatch.getNotes());
+		return newBatch;
 	}
 
 	/************************************************************************************
@@ -63,7 +69,10 @@ public class BatchServiceImpl implements BatchService {
 	 */
 	@Override
 	public Batch findById(int id) {
-		return batchRepo.findByBatchId(id);
+		Batch batch = batchRepo.findByBatchId(id);
+		Hibernate.initialize(batch.getTrainees());
+		Hibernate.initialize(batch.getNotes());
+		return batch;
 	}
 
 	/**

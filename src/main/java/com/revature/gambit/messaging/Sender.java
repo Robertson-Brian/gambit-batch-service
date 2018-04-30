@@ -1,8 +1,11 @@
 package com.revature.gambit.messaging;
 
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author chris
@@ -10,6 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate;
  * if it was the one that sent it
  *
  */
+@Component
 public class Sender {
 	
 	@Autowired
@@ -18,47 +22,32 @@ public class Sender {
 	@Autowired
 	UUIDService uuidService;
 	
+	private static Logger logger = Logger.getLogger(Sender.class);
+	
+	private static final ObjectMapper mapper = new ObjectMapper();
 	
 	
 	/**
-	 * sends a message to insert in another instance 
-	 * @param payload should be a json object no spaces in it
+
+	 * sends a message with UUID of service and JSON object
+	 * @param topic which topic it is sending to
+	 * @param payload object to be sent in message
 	 */
-	public void sendInsert(String payload){
+	public void send(String topic, Object payload) {
 		uuidService.checkuuid();
-		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
-		
-		kafkaTemplate.send("batch.register.t", payload);
+		logger.info("Sending payload for topic: " + topic);
+		try {
+			String message = uuidService.getServiceInstanceIdentifier().toString()+" "+mapper.writeValueAsString(payload);
+			logger.info("Sending message: "+ message);
+			kafkaTemplate.send(topic, message);
+		} catch (Exception e) {
+			logger.error("Couldn't stringify POJO in sender.", e);
+		}
+
 	}
 	
 	public void sendUUID(String payload){
 		kafkaTemplate.send("batch.uuid.t", payload);
 	}
-		
-	/**
-	 * sends a message to update in another instance 
-	 * @param payload should be a json object no spaces in it
-	 */
-	public void sendUpdate(String payload){
-		uuidService.checkuuid();
-		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
-			
-		kafkaTemplate.send("batch.update.t", payload);
-	}
-	/**
-	 * sends a message to delete in another instance 
-	 * @param payload should be a json object no spaces in it
-	 */
-	public void sendDelete(String payload){
-		uuidService.checkuuid();
-		payload=uuidService.getServiceInstanceIdentifier().toString()+" "+payload;
-			
-		kafkaTemplate.send("batch.delete.t", payload);
-	}
-				
-			
-		
-		
-	
-
+  
 }

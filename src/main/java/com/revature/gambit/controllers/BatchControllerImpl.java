@@ -55,15 +55,7 @@ public class BatchControllerImpl implements BatchController {
 	@PostMapping
 	@Override
 	public Batch save(@RequestBody Batch newBatch) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(newBatch);
-		} catch (JsonProcessingException e) {
-			LoggingUtil.logWarn(e.toString());
-			e.printStackTrace();
-		}
-		sender.sendInsert(json);
+		sender.send("batch.register.t",newBatch);
 		return batchService.save(newBatch);
 	}
 
@@ -122,15 +114,7 @@ public class BatchControllerImpl implements BatchController {
 	@PutMapping
 	@Override
 	public void update(@RequestBody Batch updatedBatch) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(updatedBatch);
-		} catch (JsonProcessingException e) {
-			LoggingUtil.logWarn(e.toString());
-			e.printStackTrace();
-		}
-		sender.sendUpdate(json);
+		sender.send("batch.update.t",updatedBatch);
 		batchService.update(updatedBatch);
 	}
 
@@ -146,7 +130,7 @@ public class BatchControllerImpl implements BatchController {
 	@DeleteMapping("{id}")
 	@Override
 	public void delete(@PathVariable int id) {
-		sender.sendDelete(String.valueOf(id));
+		sender.send("batch.delete.t",String.valueOf(id));
 		batchService.delete(id);
 	}
 }
