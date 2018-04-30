@@ -34,6 +34,9 @@ spring:
       trainee.register: trainee.register.t
       trainee.update: trainee.update.t
       trainee.delete: trainee.delete.t
+      note.register: note.register.t
+      note.update: note.update.t
+      note.delete: note.delete.t
   
   datasource:
     url: jdbc:h2:mem:test
