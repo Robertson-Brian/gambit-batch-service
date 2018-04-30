@@ -7,6 +7,11 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 
+/**
+ * 
+ * @author Sam Harmon, Travis Rigg, Yuri Felicio, Peter Farber
+ *
+ */
 @Entity
 @Table(name="BATCH")
 public class Batch {
@@ -15,9 +20,21 @@ public class Batch {
 	@SequenceGenerator(name = "BATCH_ID_SEQ", sequenceName = "BATCH_ID_SEQ", allocationSize = 1)
 	@GeneratedValue(generator = "BATCH_ID_SEQ", strategy = GenerationType.SEQUENCE)
 	private int batchId;
-
+	
 	@Column(name="RESOURCE_ID")
 	private int resourceId;
+	
+	@Column(name="GOOD_GRADE_THRESHOLD")
+	private int goodGradeThreshold;
+	
+	@Column(name="ADDRESS_ID")
+	private int addressId;
+	
+	@Column(name="BORDERLINE_GRADE_THRESHOLD")
+	private int borderlineGradeThreshold;
+	
+	@Column(name="WEEK")
+	private int week;
 
 	@Column(name="TRAINING_NAME")
 	private String trainingName;
@@ -51,6 +68,19 @@ public class Batch {
 
 	public Batch() {
 		super();
+		goodGradeThreshold = 80;
+		borderlineGradeThreshold = 70;
+	}
+	
+	/**
+	 * Constructor for batch with initial grade thresholds
+	 * @param goodGradeThreshold initializes the good grade threshold
+	 * @param borderlineGradeThreshold initializes the borderline gradeThreshold
+	 */
+	public Batch(int goodGradeThreshold, int borderlineGradeThreshold) {
+		this();
+		this.goodGradeThreshold = goodGradeThreshold;
+		this.borderlineGradeThreshold = borderlineGradeThreshold;
 	}
 
 	@Override
@@ -58,6 +88,10 @@ public class Batch {
 		return "Batch{" +
 				"batchId=" + batchId +
 				", resourceId=" + resourceId +
+				", goodGradeThreshold=" + goodGradeThreshold +
+				", addressId=" + addressId +
+				", borderlineGradeThreshold=" + borderlineGradeThreshold +
+				", week=" + week + 
 				", trainingName='" + trainingName + '\'' +
 				", trainerId=" + trainerId +
 				", cotrainerId=" + cotrainerId +
@@ -85,6 +119,38 @@ public class Batch {
 
 	public void setResourceId(int resourceId) {
 		this.resourceId = resourceId;
+	}
+	
+	public int getGoodGradeThreshold() {
+		return goodGradeThreshold;
+	}
+
+	public void setGoodGradeThreshold(int goodGradeThreshold) {
+		this.goodGradeThreshold = goodGradeThreshold;
+	}
+
+	public int getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
+
+	public int getBorderlineGradeThreshold() {
+		return borderlineGradeThreshold;
+	}
+
+	public void setBorderlineGradeThreshold(int borderlineGradeThreshold) {
+		this.borderlineGradeThreshold = borderlineGradeThreshold;
+	}
+
+	public int getWeek() {
+		return week;
+	}
+
+	public void setWeek(int week) {
+		this.week = week;
 	}
 
 	public String getTrainingName() {
