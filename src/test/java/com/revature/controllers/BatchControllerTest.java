@@ -1,7 +1,5 @@
 package com.revature.controllers;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doNothing;
@@ -14,11 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.hasSize;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import com.revature.gambit.messaging.Sender;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,6 +47,9 @@ public class BatchControllerTest {
 
     @Mock
     private BatchService batchService;
+
+    @Mock
+    private Sender sender;
 
     @Before
     public void setUp() throws Exception {
