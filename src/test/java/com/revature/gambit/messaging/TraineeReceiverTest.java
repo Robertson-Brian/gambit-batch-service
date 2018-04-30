@@ -48,6 +48,9 @@ public class TraineeReceiverTest {
 	private static final String TRAINEE_REGISTER_TOPIC = "trainee.register.t";
 	private static final String TRAINEE_UPDATE_TOPIC = "trainee.update.t";
 	private static final String TRAINEE_DELETE_TOPIC = "trainee.delete.t";
+	private static final String NOTE_REGISTER_TOPIC = "note.register.t";
+	private static final String NOTE_UPDATE_TOPIC = "note.update.t";
+	private static final String NOTE_DELETE_TOPIC = "note.delete.t";
 	
 	@Autowired
 	private TraineeReceiver receiver;
@@ -66,7 +69,8 @@ public class TraineeReceiverTest {
 	@ClassRule
 	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BATCH_REGISTER_TOPIC, 
 			BATCH_UPDATE_TOPIC, BATCH_DELETE_TOPIC, UUID_TOPIC, TRAINEE_REGISTER_TOPIC, 
-			TRAINEE_UPDATE_TOPIC, TRAINEE_DELETE_TOPIC);
+			TRAINEE_UPDATE_TOPIC, TRAINEE_DELETE_TOPIC, NOTE_REGISTER_TOPIC, 
+			NOTE_UPDATE_TOPIC, NOTE_DELETE_TOPIC);
 	
 	@Before
 	public void setUp() throws Exception {

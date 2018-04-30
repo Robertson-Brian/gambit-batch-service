@@ -44,6 +44,9 @@ public class ReceiverTest {
 	private static final String TRAINEE_REGISTER_TOPIC = "trainee.register.t";
 	private static final String TRAINEE_UPDATE_TOPIC = "trainee.update.t";
 	private static final String TRAINEE_DELETE_TOPIC = "trainee.delete.t";
+	private static final String NOTE_REGISTER_TOPIC = "note.register.t";
+	private static final String NOTE_UPDATE_TOPIC = "note.update.t";
+	private static final String NOTE_DELETE_TOPIC = "note.delete.t";
 	
 	@Autowired
 	private Receiver receiver;
@@ -59,7 +62,8 @@ public class ReceiverTest {
 	@ClassRule
 	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BATCH_REGISTER_TOPIC, 
 			BATCH_UPDATE_TOPIC, BATCH_DELETE_TOPIC, UUID_TOPIC, TRAINEE_REGISTER_TOPIC, 
-			TRAINEE_UPDATE_TOPIC, TRAINEE_DELETE_TOPIC);
+			TRAINEE_UPDATE_TOPIC, TRAINEE_DELETE_TOPIC, NOTE_REGISTER_TOPIC, 
+			NOTE_UPDATE_TOPIC, NOTE_DELETE_TOPIC);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -153,7 +157,7 @@ public class ReceiverTest {
 		template.send(BATCH_DELETE_TOPIC, batchJSON);
 		LOGGER.debug("test-sender sent delete message='{}'", batchJSON);
 		
-	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+	    receiver.getLatch().await(100000, TimeUnit.MILLISECONDS);
 	    // check that the message was received
 	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
 	    // check that the batch was deleted
