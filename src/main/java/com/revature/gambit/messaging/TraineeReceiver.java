@@ -14,6 +14,11 @@ import com.revature.gambit.model.TraineeDTO;
 import com.revature.gambit.services.BatchServiceImpl;
 import com.revature.gambit.util.LoggingUtil;
 
+
+/**
+ * @author klath
+ * Receives messages from trainee subtopics
+ */
 @Component
 public class TraineeReceiver {
 	
@@ -27,6 +32,11 @@ public class TraineeReceiver {
 		return latch;
 	}
 	
+	
+	/**
+	 * @param payload
+	 * Receives messages for trainee.register and adds the trainee to their batch
+	 */
 	@KafkaListener(topics="${spring.kafka.topic.trainee.register}")
 	public void receiveInsert(String payload) {
 		ObjectMapper om = new ObjectMapper();
@@ -46,6 +56,10 @@ public class TraineeReceiver {
 		latch.countDown();
 	}
 	
+	/**
+	 * @param payload
+	 * Receives messages for trainee.update and adds trainee to their batch
+	 */
 	@KafkaListener(topics="${spring.kafka.topic.trainee.update}")
 	public void receiveUpdate(String payload) {
 		ObjectMapper om = new ObjectMapper();
@@ -65,6 +79,10 @@ public class TraineeReceiver {
 		latch.countDown();
 	}
 	
+	/**
+	 * @param payload
+	 * Receives messages from trainee.delete and removes trainee from their batch
+	 */
 	@KafkaListener(topics="${spring.kafka.topic.trainee.delete}")
 	public void recieveDelete(String payload) {
 		ObjectMapper om = new ObjectMapper();

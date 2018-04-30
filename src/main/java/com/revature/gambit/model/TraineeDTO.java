@@ -2,6 +2,10 @@ package com.revature.gambit.model;
 
 import java.util.Set;
 
+/**
+ * @author klath
+ *	Used for adding Trainees to batches received from messages
+ */
 public class TraineeDTO {
 
 	private int userId;
