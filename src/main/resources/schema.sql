@@ -2,6 +2,10 @@
 CREATE TABLE BATCH
 (
     batch_id INT PRIMARY KEY,
+    GOOD_GRADE_THRESHOLD INT NOT NULL,
+    ADDRESS_ID INT,
+    BORDERLINE_GRADE_THRESHOLD INT NOT NULL,
+    WEEK INT,
     cotrainer_id INT,
     end_date TIMESTAMP NULL,
     location VARCHAR(200),
@@ -10,11 +14,7 @@ CREATE TABLE BATCH
     start_date TIMESTAMP NULL,
     trainer_id INT,
     training_name VARCHAR(200),
-    training_type VARCHAR(200),
-    good_grade_threshold INT,
-    address_id INT,
-    borderline_grade_threshold INT,
-    week INT
+    training_type VARCHAR(200)
 );
 
 CREATE SEQUENCE BATCH_ID_SEQ START WITH 5 INCREMENT BY 5;

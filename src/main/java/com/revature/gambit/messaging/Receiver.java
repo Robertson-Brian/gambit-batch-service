@@ -15,7 +15,7 @@ import com.revature.gambit.util.LoggingUtil;
 public class Receiver {
 	
 	@Autowired
-	UUIDService UUIDService;
+	UUIDService uuidService;
 	
 	@Autowired
 	BatchServiceImpl batchService;
@@ -39,14 +39,13 @@ public class Receiver {
 		LoggingUtil.logInfo(payload);
 		
 		String[] a = payload.split(" ", 2);
-		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+		if(!a[0].equals(uuidService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {
 				Batch batch = om.readValue(a[1], Batch.class);
 				batchService.save(batch);
 			} catch (Exception e) {
 				LoggingUtil.logWarn(e.toString());
-				e.printStackTrace();
 			}
 		}
 		latch.countDown();
@@ -66,14 +65,13 @@ public class Receiver {
 		
 		String[] a = payload.split(" ", 2);
 		
-		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+		if(!a[0].equals(uuidService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {
 				Batch batch = om.readValue(a[1], Batch.class);
 				batchService.update(batch);
 			} catch (Exception e) {
 				LoggingUtil.logWarn(e.toString());
-				e.printStackTrace();
 			}
 		}
 		latch.countDown();
@@ -83,10 +81,11 @@ public class Receiver {
 	
 	@KafkaListener(topics="${spring.kafka.topic.batch.uuid}")
 	public void recieveUUID(String payload) {
+
 		
-		UUIDService.addUUIDToList(payload);
+    uuidService.addUUIDToList(payload);
 		latch.countDown();
-					
+						
 	}
 	
 	
@@ -103,14 +102,13 @@ public class Receiver {
 		
 		String[] a = payload.split(" ", 2);
 		
-		if(!a[0].equals(UUIDService.getServiceInstanceIdentifier().toString())) {
+		if(!a[0].equals(uuidService.getServiceInstanceIdentifier().toString())) {
 			LoggingUtil.logInfo(a[1]);
 			try {
 				int id = om.readValue(a[1], Integer.class);
 				batchService.delete(id);
 			} catch (Exception e) {
 				LoggingUtil.logWarn(e.toString());
-				e.printStackTrace();
 			}
 		}
 		latch.countDown();

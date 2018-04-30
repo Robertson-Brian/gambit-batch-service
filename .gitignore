@@ -10,8 +10,8 @@
 **/issue_template.md
 **/target/
 **/bin/
-**/logs/
 **/META-INF/**
+**/logs/**
 
 #Eclipse
 **/.metadata

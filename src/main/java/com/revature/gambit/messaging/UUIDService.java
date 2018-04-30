@@ -17,14 +17,20 @@ public class UUIDService {
 	Sender sender;
 	private static UUIDService instance = null;
 	private int checked= 0;
-	private List<UUID>listUUID = new ArrayList<UUID>();
-	private UUID serviceInstanceIdentifier=UUID.randomUUID();
+
+	
+	private List<UUID> listUUID;
+
+	private UUID serviceInstanceIdentifier;
+
 	   
 	   /**
 	 *  Creates instance of a random UUID
 	 */
 	private UUIDService(){
-		
+
+		listUUID = new ArrayList<>();
+		serviceInstanceIdentifier = UUID.randomUUID();
 	     
 	}
 	   /**
@@ -48,23 +54,25 @@ public class UUIDService {
 	/**
 	 * Sees if it has been checked before
 	 */
-	public void checkuuid() {
+	public boolean checkuuid() {
 		if (checked==0) {
-			sendIfListIsEmpty();
+			return sendIfListIsEmpty();
 		}
+		return false;
 	}
 	
 	/**
 	 * sends UUID to kafka if there is no UUID in kafka (starts list)
 	 */
-	public void sendIfListIsEmpty() {
+	public boolean sendIfListIsEmpty() {
 		if(listUUID.isEmpty()) {
 			sender.sendUUID(serviceInstanceIdentifier.toString());
 			checked=1;
-	     
+			return true;
 		}
 		else {
 			checkToSeeIfUuidIsInList();
+			return false;
 		}
 	}
 	
@@ -92,8 +100,10 @@ public class UUIDService {
 	
 	public UUID getServiceInstanceIdentifier(){
 		   return this.serviceInstanceIdentifier;
-	   }
+    }
+
+	public List<UUID> getListUUID() {
+		return listUUID;
 	}
 
-
-
+}
