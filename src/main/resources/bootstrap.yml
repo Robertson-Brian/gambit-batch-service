@@ -1,17 +1,8 @@
-#Server Configuration 
-server:  
-  port: 10002
-
 #Spring Configuration
 spring:
   application:
     name: batch-service
   cloud:
     config:
-      uri: https://gambit-config-server-brash-porcupine.cfapps.io
-      
-      
-#Eureka Configuration  
-eureka:  
-  client:  
-    register-with-eureka: true
+      uri: ${CONFIG_HOME}
+      fail-fast: true
