@@ -3,8 +3,12 @@ package com.revature.gambit.util;
 import org.apache.log4j.Logger;
 
 public class LoggingUtil {
-	
+
 	private static Logger log = Logger.getRootLogger();
+
+	private LoggingUtil(){
+
+	}
 	
 	public static void logFatal(String s){
 		

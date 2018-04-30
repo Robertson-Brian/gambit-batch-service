@@ -20,7 +20,7 @@ public class Sender {
 	private KafkaTemplate<String, String> kafkaTemplate;
 	
 	@Autowired
-	UUIDService UUIDService;
+	UUIDService uuidService;
 	
 	private static Logger logger = Logger.getLogger(Sender.class);
 	
@@ -28,6 +28,7 @@ public class Sender {
 	
 	
 	/**
+
 	 * sends a message with UUID of service and JSON object
 	 * @param topic which topic it is sending to
 	 * @param payload object to be sent in message
@@ -42,10 +43,11 @@ public class Sender {
 		} catch (Exception e) {
 			logger.error("Couldn't stringify POJO in sender.", e);
 		}
+
 	}
 	
 	public void sendUUID(String payload){
 		kafkaTemplate.send("batch.uuid.t", payload);
 	}
-
+  
 }
