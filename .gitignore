@@ -11,6 +11,7 @@
 **/target/
 **/bin/
 **/META-INF/**
+**/logs/**
 
 #Eclipse
 **/.metadata
@@ -34,3 +35,4 @@
 #Mac
 .DS_Store
 /.recommenders/
+
