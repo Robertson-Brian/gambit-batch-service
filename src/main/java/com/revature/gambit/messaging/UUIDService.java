@@ -17,14 +17,19 @@ public class UUIDService {
 	Sender sender;
 	private static UUIDService instance = null;
 	private int checked= 0;
-	private List<UUID>listUUID = new ArrayList<UUID>();
-	private UUID serviceInstanceIdentifier=UUID.randomUUID();
+
+	
+	private List<UUID> listUUID;
+	private UUID serviceInstanceIdentifier;
+
 	   
 	   /**
 	 *  Creates instance of a random UUID
 	 */
 	private UUIDService(){
-		
+
+		listUUID = new ArrayList<UUID>();
+		serviceInstanceIdentifier = UUID.randomUUID();
 	     
 	}
 	   /**
