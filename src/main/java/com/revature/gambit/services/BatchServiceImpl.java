@@ -51,6 +51,7 @@ public class BatchServiceImpl implements BatchService {
 	public Batch save(Batch newBatch) {
 		newBatch = batchRepo.save(newBatch);
 		Hibernate.initialize(newBatch.getTrainees());
+		Hibernate.initialize(newBatch.getNotes());
 		return newBatch;
 	}
 
@@ -70,6 +71,7 @@ public class BatchServiceImpl implements BatchService {
 	public Batch findById(int id) {
 		Batch batch = batchRepo.findByBatchId(id);
 		Hibernate.initialize(batch.getTrainees());
+		Hibernate.initialize(batch.getNotes());
 		return batch;
 	}
 
