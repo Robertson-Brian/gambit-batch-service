@@ -1,13 +1,17 @@
 package com.revature.gambit.messaging;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchServiceImpl;
 import com.revature.gambit.util.LoggingUtil;
 
+@Component
 public class Receiver {
 	
 	@Autowired
@@ -15,6 +19,13 @@ public class Receiver {
 	
 	@Autowired
 	BatchServiceImpl batchService;
+	
+	//CountDownLatch is used in testing to confirm a message was recieved
+	private CountDownLatch latch = new CountDownLatch(1);
+
+	public CountDownLatch getLatch() {
+		return latch;
+	}
 	
 	/**
 	 * @param payload json object to update another instance database
@@ -37,6 +48,7 @@ public class Receiver {
 				LoggingUtil.logWarn(e.toString());
 			}
 		}
+		latch.countDown();
 	}
 	
 	
@@ -62,6 +74,7 @@ public class Receiver {
 				LoggingUtil.logWarn(e.toString());
 			}
 		}
+		latch.countDown();
 	}
 	
 	
@@ -69,8 +82,10 @@ public class Receiver {
 	@KafkaListener(topics="${spring.kafka.topic.batch.uuid}")
 	public void recieveUUID(String payload) {
 
-		uuidService.addUUIDToList(payload);
-					
+		
+    uuidService.addUUIDToList(payload);
+		latch.countDown();
+						
 	}
 	
 	
@@ -96,6 +111,6 @@ public class Receiver {
 				LoggingUtil.logWarn(e.toString());
 			}
 		}
+		latch.countDown();
 	}
-
 }

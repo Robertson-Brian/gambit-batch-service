@@ -3,8 +3,10 @@
    Insert Some Data
 ********************************************************************************/
 
+
 INSERT INTO BATCH (batch_id, GOOD_GRADE_THRESHOLD, ADDRESS_ID, BORDERLINE_GRADE_THRESHOLD, WEEK, resource_id, training_name, trainer_id, cotrainer_id, skill_type, training_type, start_date, end_date, location)
 VALUES (NEXTVAL('BATCH_ID_SEQ'), 80, 1, 70, 1, 1, '1802JavaNick', 1, 2, 6, 'Java', PARSEDATETIME('2017-10-02','yyyy-mm-dd'), PARSEDATETIME('2017-12-06', 'yyyy-mm-dd'), 'Reston');
+
 
 -- INSERT INTO BATCH (resource_id, training_name, trainer_id, cotrainer_id, skill_type, training_type, start_date, end_date, location)
 -- VALUES (2, '1803JavaNick', 1, 2, 'Java', 'Java', DATE '2017-12-12', DATE '2018-02-12', 'Reston');
