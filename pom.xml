@@ -1,14 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>revature</groupId>
-    <artifactId>gambit-batch-service</artifactId>
+    <groupId>com.revature</groupId>
+    <artifactId>gambit-skill-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <description>MicroService in Gambit Ecosystem used to manage the state of Skills and SkillType resources for projects such as Caliber and AssignForce.</description>
+    <name>Gambit Skill Service</name>
     
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.12.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     
@@ -16,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <spring-cloud.version>Edgware.SR1</spring-cloud.version>
     </properties>
     
     <dependencies>
@@ -178,6 +183,8 @@
             <version>1.8.9</version>
 
         </dependency>
+    
+    
     </dependencies>
     
     <dependencyManagement>
@@ -189,13 +196,29 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.2.16.Final</version>
+            </dependency>
+        
         </dependencies>
     </dependencyManagement>
     
     <build>
         <plugins>
-             <!--Docker Maven Plugin from Spotify-->
-             <!--Abstracts the process of creating Docker images from Java projects-->
+            <!-- Javadocs Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <reportOutputDirectory>Documentation</reportOutputDirectory>
+                    <destDir>Javadocs</destDir>
+                </configuration>
+            </plugin>
+            <!--Docker Maven Plugin from Spotify -->
+            <!--Abstracts the process of creating Docker images from Java projects -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -255,7 +278,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <!-- Change this to match path to actual Main class -->
-                    <mainClass>com.revature.gambit.Application</mainClass>
+                    <mainClass>com.revature.gambit.skill.Application</mainClass>
                 </configuration>
             </plugin>
             
@@ -263,7 +286,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
