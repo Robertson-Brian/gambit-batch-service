@@ -79,6 +79,10 @@ public class BatchControllerTest {
         batch1.setSkillTypeId(3);
         batch1.setTrainingType("lecturing");
         batch1.setLocation("Reston");
+        batch1.setAddressId(5);
+        batch1.setBorderlineGradeThreshold(80);
+        batch1.setGoodGradeThreshold(90);
+        batch1.setWeek(2);
 
         Batch batch2 = new Batch();
         batch2.setBatchId(2);
@@ -89,6 +93,10 @@ public class BatchControllerTest {
         batch2.setSkillTypeId(4);
         batch2.setTrainingType("lecturing");
         batch2.setLocation("Reston");
+        batch2.setAddressId(5);
+        batch2.setBorderlineGradeThreshold(80);
+        batch2.setGoodGradeThreshold(90);
+        batch2.setWeek(2);
 
         when(batchService.findById(1)).thenReturn(batch1);
         when(batchService.findById(2)).thenReturn(batch2);
@@ -104,7 +112,10 @@ public class BatchControllerTest {
                 .andExpect(jsonPath("$.cotrainerId", is(2)))
                 .andExpect(jsonPath("$.skillTypeId", is(3)))
                 .andExpect(jsonPath("$.trainingType", is("lecturing")))
-                .andExpect(jsonPath("$.location", is("Reston")));
+                .andExpect(jsonPath("$.location", is("Reston")))
+                .andExpect(jsonPath("$.addressId", is(5)))
+                .andExpect(jsonPath("$.borderlineGradeThreshold", is(80)))
+                .andExpect(jsonPath("$.week", is(2)));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/batches/2")
                 .accept(MediaType.APPLICATION_JSON))
@@ -116,7 +127,11 @@ public class BatchControllerTest {
                 .andExpect(jsonPath("$.cotrainerId", is(5)))
                 .andExpect(jsonPath("$.skillTypeId", is(4)))
                 .andExpect(jsonPath("$.trainingType", is("lecturing")))
-                .andExpect(jsonPath("$.location", is("Reston")));
+                .andExpect(jsonPath("$.location", is("Reston")))
+                .andExpect(jsonPath("$.addressId", is(5)))
+                .andExpect(jsonPath("$.borderlineGradeThreshold", is(80)))
+                .andExpect(jsonPath("$.week", is(2)));
+
     }
 
     @Test
