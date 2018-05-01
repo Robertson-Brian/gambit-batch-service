@@ -157,9 +157,10 @@ public class ReceiverTest {
 		template.send(BATCH_DELETE_TOPIC, batchJSON);
 		LOGGER.debug("test-sender sent delete message='{}'", batchJSON);
 		
-	    receiver.getLatch().await(100000, TimeUnit.MILLISECONDS);
+	    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
 	    // check that the message was received
 	    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+	    TimeUnit.SECONDS.sleep(5);
 	    // check that the batch was deleted
 	    assertThat(repo.exists(testBatch.getBatchId())).isFalse();
 	}
