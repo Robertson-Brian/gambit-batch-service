@@ -5,10 +5,15 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.gambit.Application;
@@ -23,8 +28,30 @@ import com.revature.gambit.services.BatchService;
  * 
  */
 @RunWith(SpringRunner.class)
+@DirtiesContext
 @SpringBootTest(classes=Application.class)
 public class BatchServiceTest {
+	
+	private static final String BATCH_REGISTER_TOPIC = "batch.register.t";
+	private static final String BATCH_UPDATE_TOPIC = "batch.update.t";
+	private static final String BATCH_DELETE_TOPIC = "batch.delete.t";
+	private static final String UUID_TOPIC = "batch.uuid.t";
+	private static final String TRAINEE_REGISTER_TOPIC = "trainee.register.t";
+	private static final String TRAINEE_UPDATE_TOPIC = "trainee.update.t";
+	private static final String TRAINEE_DELETE_TOPIC = "trainee.delete.t";
+	private static final String NOTE_REGISTER_TOPIC = "note.register.t";
+	private static final String NOTE_UPDATE_TOPIC = "note.update.t";
+	private static final String NOTE_DELETE_TOPIC = "note.delete.t";
+	private KafkaTemplate<String, String> template;
+	
+	@Autowired
+	private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+	
+	@ClassRule
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BATCH_REGISTER_TOPIC, 
+			BATCH_UPDATE_TOPIC, BATCH_DELETE_TOPIC, UUID_TOPIC, TRAINEE_REGISTER_TOPIC, 
+			TRAINEE_UPDATE_TOPIC, TRAINEE_DELETE_TOPIC, NOTE_REGISTER_TOPIC, 
+			NOTE_UPDATE_TOPIC, NOTE_DELETE_TOPIC);
 
 
     @Autowired
@@ -69,7 +96,7 @@ public class BatchServiceTest {
     public void testGetAllBatches() throws Exception {
 
         assertNotEquals(null, batchService.findAll());
-        assertTrue(batchService.findAll().size() > 1);
+        assertTrue(batchService.findAll().size() >= 1);
     }
 
     @Test
