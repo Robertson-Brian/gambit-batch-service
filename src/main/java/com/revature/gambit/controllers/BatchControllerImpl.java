@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.revature.gambit.messaging.Sender;
 import com.revature.gambit.model.Batch;
 import com.revature.gambit.services.BatchService;
-import com.revature.gambit.util.LoggingUtil;
 
 /**
  * Hydra controller for Janus Batches
