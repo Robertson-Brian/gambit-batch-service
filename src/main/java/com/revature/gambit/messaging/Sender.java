@@ -47,7 +47,7 @@ public class Sender {
 	}
 	
 	public void sendUUID(String payload){
-		kafkaTemplate.send("batch.uuid.t", payload);
+			kafkaTemplate.send("batch.uuid.t", payload);
 	}
   
 }
