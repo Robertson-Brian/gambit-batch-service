@@ -3,7 +3,6 @@ package com.revature.gambit.messaging;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -49,7 +48,6 @@ public class NoteReceiver {
 			}
 		} catch (IOException e) {
 			LoggingUtil.logWarn(e.toString());
-			e.printStackTrace();
 		}
 		latch.countDown();
 	}
@@ -72,7 +70,6 @@ public class NoteReceiver {
 			}
 		} catch (IOException e) {
 			LoggingUtil.logWarn(e.toString());
-			e.printStackTrace();
 		}
 		latch.countDown();
 	}
@@ -95,7 +92,6 @@ public class NoteReceiver {
 			}
 		} catch (IOException e) {
 			LoggingUtil.logWarn(e.toString());
-			e.printStackTrace();
 		}
 		latch.countDown();
 	}
