@@ -49,7 +49,7 @@ public class UUIDService {
 	 */
 	public void addUUIDToList(String uuid){
 		listUUID.add(UUID.fromString(uuid));
-	   }
+   	}
 	
 	/**
 	 * Sees if it has been checked before
@@ -60,7 +60,7 @@ public class UUIDService {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * sends UUID to kafka if there is no UUID in kafka (starts list)
 	 */
@@ -82,15 +82,15 @@ public class UUIDService {
 	public void checkToSeeIfUuidIsInList() {
 		int a=0;
 		while(a!=1) {
-			UUID temp = UUID.randomUUID();
+			a=0;
+			UUID temp = serviceInstanceIdentifier;
 			for (UUID i:listUUID) {
 				if(temp.equals(i)){
-					temp = UUID.randomUUID();
+					serviceInstanceIdentifier = UUID.randomUUID();
 					a=-1;
 				}
 			}
 			if (a==0) {
-				serviceInstanceIdentifier = temp;
 				sender.sendUUID(serviceInstanceIdentifier.toString());
 				checked=1;
 				a=1;
@@ -102,8 +102,17 @@ public class UUIDService {
 		   return this.serviceInstanceIdentifier;
     }
 
+
 	public List<UUID> getListUUID() {
 		return listUUID;
+	}
+
+	public int getChecked(){
+		return checked;
+	}
+
+	public void setSender(Sender sender){
+		this.sender = sender;
 	}
 
 }
